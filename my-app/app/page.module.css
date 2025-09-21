@@ -1,3 +1,7 @@
+/* This module page is used in case we want to 
+give an specific style in a Page 
+
+This is an example about how it would look*/
 .page {
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
