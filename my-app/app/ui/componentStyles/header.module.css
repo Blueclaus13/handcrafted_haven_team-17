@@ -5,18 +5,20 @@
   align-items: center;
   padding: 10px 20px;
   background-color: var(--tertiary-color);
-  position: fixed;       
+  position: sticky;      
   top: 0;                
   left: 0;               
   width: 100%;
   z-index: 1000;        
   box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-  height: 80px;
+  height: auto;
+  font-size: var(--large-font);
 }
 
 .logo {
   display: flex;
   align-items: center;
+  min-width: 200px;
   gap: 10px;
   padding: 1%;
   border-radius: 10%;
@@ -30,4 +32,23 @@
   font-size: var(--large-font);
   color: var(--light-color);
   background-color: var(--primary-color);
+}
+@media only screen and (max-width: 650px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        text-align: center;
+        gap: 10px;
+        padding: 0;  
+    }
+    .logo {
+        justify-content: center;
+        width: 100%;
+        border-radius: 0;
+    }
+    .signProfile {
+        justify-content: center;
+        width: auto;
+        font-size: var(--small-font);
+    }
 }

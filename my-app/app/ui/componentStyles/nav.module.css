@@ -18,8 +18,42 @@
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
+  font-size: var(--large-font);
 }
 
 .navItem a:hover {
   color: var(--first-contrast-color);
+}
+
+.menuToggle {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  display: none; 
+}
+
+@media (max-width: 650px) {
+  .navbar{
+    order: 2;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+  .menuToggle {
+    display: block; 
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer
+  }
+  .navList.open {
+    display: flex; 
+  }
+   .navList {
+    display: none; /* oculto por defecto */
+    flex-direction: column;
+    background: var(--primary-color);
+    padding: 1rem;
+  }
 }

@@ -1,11 +1,12 @@
+import Footer from "./footer";
 import Header from "./header";  
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-        <Header/>
-      <div style={{paddingTop:"80px"}}>
-        {children}</div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+  <Header />
+  <main style={{ flex: 1, minHeight: 0 }}>{children}</main>
+      <Footer />
     </div>
   );
 }
