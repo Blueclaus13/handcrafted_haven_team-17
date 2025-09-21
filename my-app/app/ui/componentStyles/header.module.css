@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  gap: 20px;
+  justify-content:space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--tertiary-color);
+  position: fixed;       
+  top: 0;                
+  left: 0;               
+  width: 100%;
+  z-index: 1000;        
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+  height: 80px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1%;
+  border-radius: 10%;
+  background-color: var(--primary-color);
+  color: var(--first-contrast-color);
+}
+
+.signProfile {
+  display: flex;
+  gap: 0.5rem;
+  font-size: var(--large-font);
+  color: var(--light-color);
+  background-color: var(--primary-color);
+}

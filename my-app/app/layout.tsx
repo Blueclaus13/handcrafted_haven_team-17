@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import Layout from "./ui/genComponents/layout"; 
 import "./globals.css";
 
 export default function RootLayout({
@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        {children}
+        <Layout>{children}</Layout>
       </body>
     </html>
   );

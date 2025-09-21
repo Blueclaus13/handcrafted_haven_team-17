@@ -7,6 +7,7 @@
   --secondary-color: #F26FA7;
   --tertiary-color: #8b5e3c;
   /* Links, important buttons: */
+  --first-contrast-color: yellow;
   --contrast-color: #20C2C2;
   /* backgrounds, text */
   --light-color: #FDF6F8;
@@ -88,4 +89,8 @@ img {
   background-color: var(--tertiary-color);
   margin-bottom: 1rem;
   color: var(--light-color);
+}
+
+.smallText{
+  font-size: var(--small-font);
 }
