@@ -1,0 +1,56 @@
+
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6rem 2rem;
+  background: linear-gradient(to bottom, #1a1a1a, #333);
+  color: white;
+  gap: 2rem;
+  font-family: playfair display, serif;
+}
+
+.content {
+  flex: 1;
+  max-width: 500px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.registerLink {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #D52373;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.registerLink:hover {
+  background: #971851;
+}
+
+.imageWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  border-radius: 12px;
+  max-width: 100%;
+  height: auto;
+}
+
