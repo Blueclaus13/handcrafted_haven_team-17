@@ -6,6 +6,7 @@ import Hero from "./ui/genComponents/Hero";
 export default function Home() {
   return (
     <div>
+      <Hero />
       <section>
         <h1>Welcome to My Next.js App</h1>
         <h2>This is a H2 title</h2>
