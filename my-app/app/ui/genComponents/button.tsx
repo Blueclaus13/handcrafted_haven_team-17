@@ -1,10 +1,16 @@
 'use client';
 import styles from '../componentStyles/button.module.css';
 
-export default function Button({ text, onClick }: { text: string; onClick: () => void }) {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+}
+
+export default function Button({ children, className, ...rest }: ButtonProps) {
   return (
-    <button className={styles.button} onClick={onClick}>
-      {text}
+    <button 
+    {...rest}
+    className={styles.button} >
+      {children}
     </button>
   );
 }
