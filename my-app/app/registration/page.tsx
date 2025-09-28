@@ -1,6 +1,6 @@
 export default function RegistrationPage() {
   return (
-    <main style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
+    <div style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
       <h1>Register</h1>
       <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <label>
@@ -17,6 +17,6 @@ export default function RegistrationPage() {
         </label>
         <button type="submit">Create Account</button>
       </form>
-    </main>
+    </div>
   );
 }

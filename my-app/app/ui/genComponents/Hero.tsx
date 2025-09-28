@@ -1,7 +1,7 @@
 // components/Hero.tsx
 // app/components/Hero.tsx
 import Image from "next/image";
-import styles from "./styles/Hero.module.css";
+import styles from "../componentStyles/hero.module.css";
 import Link from "next/link";
 
 export default function Hero() {
