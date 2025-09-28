@@ -1,6 +1,8 @@
 'use client';
  
 import Button  from "../genComponents/button";
+import { AiOutlineMail, AiFillLock } from "react-icons/ai";
+import style  from "../componentStyles/loginForm.module.css";
 import { useActionState } from 'react';
 import { useSearchParams } from 'next/navigation';
  
@@ -8,58 +10,60 @@ export default function LoginForm() {
 
  
   return (
-    <form >
-      <div >
-        <h1 >
-          Please log in
-        </h1>
-        <div>
-          <div>
-            <label
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <div >
-              <input
-              
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                required
-              />
-              
+    <div className={style.loginBlock}>
+        <form >
+            <div>
+                <div>
+                    <div className={style.inputGroup}>
+                        <AiOutlineMail className="icon" />
+                        <label
+                        htmlFor="email"
+                        >
+                        Email
+                        </label>
+                        <div className={style.inputContainer}>
+                        <input
+                            className={style.input}
+                            id="email"
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        />
+                        
+                        </div>
+                    </div>
+                    <div className={style.inputGroup}>
+                        <AiFillLock className="icon" />
+                        <label
+                        
+                        htmlFor="password"
+                        >
+                        Password
+                        </label>
+                        <div className={style.inputContainer}>
+                        <input
+                            className={style.input}
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Enter password"
+                            required
+                            minLength={6}
+                        />
+                        
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="redirectTo" />
+                <Button type="submit" className={style.submitButton}>
+                    Log in
+                </Button>
             </div>
-          </div>
-          <div className="mt-4">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                required
-                minLength={6}
-              />
-             
-            </div>
-          </div>
-        </div>
-        <input type="hidden" name="redirectTo" />
-        <Button type="submit">
-          Log in
-        </Button>
-        <div>
-        </div>
-      </div>
-    </form>
+
+        </form>
+
+    </div>
+    
   );
 }
