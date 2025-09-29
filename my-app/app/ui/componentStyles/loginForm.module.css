@@ -38,3 +38,25 @@ margin-left: 5px;
     margin: 20px auto;
     display: block;
 }
+
+.registerText{
+    margin: 0;
+    display: inline;
+    font-size: var(--small-font);
+    color: var(--light-color);
+}
+.registerLink{
+    margin-left: 5px;
+    font-size: var(--small-font);
+    cursor: pointer;
+}
+
+.registerLink:hover{
+    color: var(--first-contrast-color);
+}
+
+.error{
+    font-size: var(--small-font);
+    margin-top: 10px;
+    text-align: center;
+}

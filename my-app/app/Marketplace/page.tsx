@@ -1,5 +1,5 @@
 
-export default function MarketplacePage() {
+export default function Page() {
   return (
     <div>
         <h1>Marketplace Page</h1>

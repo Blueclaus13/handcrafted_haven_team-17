@@ -9,9 +9,7 @@ export default function LoginPage() {
       <div>
         <h1 className={style.title}>Login</h1>
         <hr/>
-        <Suspense>
-          <LoginForm />
-        </Suspense>
+        <LoginForm />
       </div>
   );
 }

@@ -1,5 +1,5 @@
 
-export default function SellersPage() {
+export default function Page() {
   return (
     <div>
         <h1>Seller Page</h1>
