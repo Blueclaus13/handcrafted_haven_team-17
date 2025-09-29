@@ -64,7 +64,7 @@ const [state, formActionWithState] = useActionState(
                             onChange={(e) => setShowPassword(e.target.checked)}  /> 
                         <p className={style.registerText}>Show Password</p>
                     </div>
-                    <p className={style.registerText}>Don't have an account? </p> 
+                    <p className={style.registerText}>Don&apos;t have an account? </p> 
                     <Link href="/registration" className={style.registerLink}>Registration</Link>
                 </div>
                 <input type="hidden" name="redirectTo" />

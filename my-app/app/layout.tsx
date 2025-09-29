@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Layout from "./ui/genComponents/layout"; 
 import "./globals.css";
 
