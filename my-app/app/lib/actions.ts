@@ -1,8 +1,8 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
-import AuthError from 'next-auth';
+// import { revalidatePath } from 'next/cache';
+// import AuthError from 'next-auth';
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),

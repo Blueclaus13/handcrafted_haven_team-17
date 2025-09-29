@@ -4,7 +4,6 @@ import Button  from "../genComponents/button";
 import { AiOutlineMail, AiFillLock } from "react-icons/ai";
 import style  from "../componentStyles/loginForm.module.css";
 import { useState, useActionState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import {loginAction} from '../../lib/actions';
 import Link from "next/link";
  
