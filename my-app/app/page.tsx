@@ -1,13 +1,13 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import Hero from "./ui/genComponents/Hero";
-
+import RandomProducts from "./ui/home/ProductPreview";
 
 export default function Home() {
   return (
-    <div>
+    <main>
       <Hero />
-      <section>
+      {/* <section>
         <h1>Welcome to My Next.js App</h1>
         <h2>This is a H2 title</h2>
         <h3>This is a H3 title</h3>
@@ -20,7 +20,8 @@ export default function Home() {
        <h2>Colors</h2>
        <div id="primary"><p>Lorem ipsum dolor sit amet,</p></div>
        <div id="secundary"><p>2 Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></div>
-       <div id="ternary"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p></div>
-    </div>
+       <div id="ternary"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p></div> */}
+      <RandomProducts />
+    </main>
   );
 }
