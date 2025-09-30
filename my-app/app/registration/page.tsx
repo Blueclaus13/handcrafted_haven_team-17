@@ -1,48 +1,89 @@
-import styles from "./RegistrationPage.module.css";
+"use client";
+import { useState } from "react";
+import styles from "../ui/componentStyles/RegistrationPage.module.css";
 
-import styles from "./RegistrationPage.module.css";
+export default function RegisterForm() {
+  const [error, setError] = useState("");
 
-export default function RegistrationPage() {
-  return (
-    <main style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
-      <h1>Register</h1>
-      <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <label>
-          Name
-          <input type="text" name="name" required />
-        </label>
-        <input type="date" id="birthday" name="birthday" required />
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
 
-        <label htmlFor="email">
-          Email
-        </label>
-        <input type="email" id="email" name="email" placeholder="someone@gmail.com" required />
+    const body = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      userName: formData.get("userName"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+      birthday: new Date(formData.get("birthday") as string), // convert to Date
+      description: formData.get("description"),
+      isSeller: formData.get("isSeller") === "on",
+    };
 
-        <label htmlFor="password">
-          Password
-        </label>
-        <input type="password" id="password" name="password" required />
+    const res = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
 
-        <label htmlFor="description">
-          Description
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          rows={4}
-          placeholder="Tell us about yourself..."
-        />
+    if (!res.ok) {
+      const data = await res.json();
+      setError(data.error);
+    } else {
+      // maybe redirect to login
+    }
+  }
+
+   return (
+    <main className={styles.container}>
+      <h1 className={styles.title}>Register</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
+
+        <div className={styles.field}>
+          <label htmlFor="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" required />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" required />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="userName">Username</label>
+          <input type="text" id="userName" name="userName" required />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="birthday">Birthday</label>
+          <input type="date" id="birthday" name="birthday" required />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="description">Description</label>
+          <textarea id="description" name="description" />
+        </div>
 
         <div className={styles.checkbox}>
-          <input type="checkbox" id="isSeller" name="isSeller" />
+          <input type="checkbox" id="isSeller" name="isSeller"/>
           <label htmlFor="isSeller">Register as Seller</label>
         </div>
 
-        <button type="submit" className={styles.button}>
-          Create Account
-        </button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button className={styles.button} type="submit">Register</button>
       </form>
-    </div>
+    </main>
   );
 }
+
+
 
