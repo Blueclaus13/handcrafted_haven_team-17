@@ -34,7 +34,7 @@ export default async function ProductList() {
                                 </p>
                             </div>
                             <div className={style.productListScore}>
-                                Review Score: {product.reviews[0].score} {/* This is a placeholder. I will write a function that calculates a random score and list it here*/}
+                                Review Score: {product.avgScore.toFixed(1)} {/* This is a placeholder. I will write a function that calculates a random score and list it here*/}
                             </div>
                         </div>
                     );
