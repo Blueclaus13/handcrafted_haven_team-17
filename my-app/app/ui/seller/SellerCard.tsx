@@ -2,16 +2,7 @@
 
 import Image from "next/image";
 import styles from "../componentStyles/SellerCard.module.css";
-
-type Seller = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  description?: string | null;
-  imageUrl?: string | null;
-};
+import { Seller } from "../../lib/definitions";
 
 export default function SellerCard({ seller }: { seller: Seller }) {
   const defaultImage = "/images/default-profile.jpg";
