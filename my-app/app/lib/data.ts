@@ -3,7 +3,7 @@ import{Seller }from "../lib/definitions";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
-export default async function getAllProducts() {
+export async function getAllProducts() {
     try {
       const products = await sql`
         SELECT 
@@ -36,9 +36,16 @@ export async function fetchSellers() {
     try{
 
         const sellers: Seller[] = await sql<Seller[]>`
-        SELECT id, firstName, lastName, userName, email, description, imageUrl
-        FROM users
-        WHERE isSeller = true;`;
+          SELECT 
+            id, 
+            firstname, 
+            lastname, 
+            username, 
+            email, 
+            description, 
+            image_url
+          FROM users
+          WHERE is_seller = true;`;
         return sellers;
     }catch (err) {
     console.error('Database Error:', err);

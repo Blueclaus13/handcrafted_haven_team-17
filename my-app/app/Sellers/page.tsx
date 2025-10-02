@@ -1,10 +1,10 @@
 import SellerCard from "../ui/seller/SellerCard";
 import styles from "../ui/componentStyles/SellersPage.module.css";
 import{Seller }from "../lib/definitions";
-import getAllProducts from "../lib/data";
+import {getAllProducts, fetchSellers} from "../lib/data";
 
 export default async function SellersPage() {
-  //const sellers: Seller[] = await fetchSellers();
+  const sellers: Seller[] = await fetchSellers();
   const randomProducts = await getAllProducts();
 
   return (
@@ -25,9 +25,9 @@ export default async function SellersPage() {
             </p>
           </div>
         ))}
-        {/* {sellers?.map((seller) => (
+        {sellers?.map((seller) => (
           <SellerCard key={seller.id} seller={seller} />
-        ))} */}
+        ))}
       </div>
     </div>
   );
