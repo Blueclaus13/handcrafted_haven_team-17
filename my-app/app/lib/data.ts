@@ -31,6 +31,28 @@ export async function getAllProducts() {
       return [];
     }
   }
+
+export async function getRandomProducts(limit: number = 3) {
+    try {
+      const products = await sql`
+        SELECT id, name, description, price, image_url
+        FROM products
+        ORDER BY RANDOM()
+        LIMIT ${limit}
+      `;
+  
+      return products.map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description ?? "No description available",
+        price: p.price ?? "N/A",
+        imageUrl: p.image_url,
+      }));
+    } catch (err) {
+      console.error("Error fetching random products:", err);
+      return [];
+    }
+  }
   
 export async function fetchSellers() {
     try{

@@ -1,0 +1,45 @@
+.container {
+    padding: 1.5rem;
+  }
+  
+  .container h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .productPreviewImage img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .productPreviewName {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 0.75rem;
+  }
+  
+  .productPreviewPrice {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
