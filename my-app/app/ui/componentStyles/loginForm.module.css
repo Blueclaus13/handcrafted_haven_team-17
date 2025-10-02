@@ -1,0 +1,62 @@
+.loginBlock{
+    margin: 50px auto;
+    background: #212c39;
+    border-radius: 20px;
+    max-width: 30%;
+    min-width: 300px;
+    position:relative;
+    height: 500px;
+    padding-top: 40px;
+    padding-left: 5%;;
+    padding-right: 5%;  
+    color: var(--contrast-color);
+    box-shadow:0 0 50px var(--primary-color);
+}
+
+.input{
+    height: 40px;
+    width: 100%;
+}
+.inputGroup{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.inputContainer{
+    width: 100%;
+}
+
+.checkBoxPassword{
+margin-top: 10px;
+margin-left: 5px;
+}
+
+.submitButton{
+    margin: 20px auto;
+    display: block;
+}
+
+.registerText{
+    margin: 0;
+    display: inline;
+    font-size: var(--small-font);
+    color: var(--light-color);
+}
+.registerLink{
+    margin-left: 5px;
+    font-size: var(--small-font);
+    cursor: pointer;
+}
+
+.registerLink:hover{
+    color: var(--first-contrast-color);
+}
+
+.error{
+    font-size: var(--small-font);
+    margin-top: 10px;
+    text-align: center;
+}

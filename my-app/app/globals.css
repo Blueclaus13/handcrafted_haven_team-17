@@ -69,6 +69,16 @@ h4{
   margin-bottom: 1rem;
   }
 
+  hr{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--primary-color);
+    margin-bottom: 30px;
+    width:30%;
+    height:5px; 
+    border-radius: 10px;
+}
+
 p{
   font-family: var(--font-text);
   font-size: var(--font-base);

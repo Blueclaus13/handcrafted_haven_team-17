@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Nav from './nav';
 import style from "../componentStyles/header.module.css";
 import Button from './button';
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -19,7 +20,11 @@ export default function Header() {
     <div className={style.signProfile}>
         {/* <p>Sign In or</p>
         <p>Profile</p> */}
-        <Button text="Sign In or Profile" onClick={() => alert("Sign In clicked!")} />
+        <Link href="/login">
+          <Button>
+            Sign In
+          </Button>
+        </Link> 
     </div>
   </div>);
 }

@@ -1,0 +1,83 @@
+/* SellersPage.module.css */
+
+.container {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr; /* default: 1 per row */
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row starting at small screens */
+  }
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.avatarFallback {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a90e2, #8e44ad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  margin: 0 auto;
+}
+
+.name {
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.username {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.description {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.4;
+  max-height: 4rem;
+  overflow: hidden;
+}
