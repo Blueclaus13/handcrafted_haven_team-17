@@ -3,7 +3,7 @@ import{Seller }from "../lib/definitions";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
-export async function getAllProducts() {
+export default async function getAllProducts() {
     try {
       const products = await sql`
         SELECT 

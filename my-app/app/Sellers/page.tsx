@@ -1,7 +1,7 @@
 import SellerCard from "../ui/seller/SellerCard";
 import styles from "../ui/componentStyles/SellersPage.module.css";
-import{Seller }from "../lib/definitions";
-import {getAllProducts, fetchSellers} from "../lib/data";
+import { Seller }from "../lib/definitions";
+import getAllProducts, { fetchSellers } from "../lib/data";
 
 export default async function SellersPage() {
   const sellers: Seller[] = await fetchSellers();
