@@ -1,5 +1,5 @@
 import prisma from "@/prisma/lib/prisma";
-import SellerCard from "../ui/genComponents/SellerCard";
+import SellerCard from "../ui/seller/SellerCard";
 import styles from "../ui/componentStyles/SellersPage.module.css";
 
 import getAllProducts from "../lib/data";
@@ -26,7 +26,7 @@ export default async function SellersPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Sellers</h1>
-      <div className={styles.grid}>
+      <div className={styles.productsGrid}>
         {randomProducts?.map((product) => (
           <div key={product.id} className={styles.productCard}>
             <img
@@ -41,10 +41,15 @@ export default async function SellersPage() {
             </p>
           </div>
         ))}
+      </div>
+        <h2>
+          Explore Our Talented Sellers
+        </h2>
+      <div className={styles.grid}> 
         {sellers?.map((seller) => (
           <SellerCard key={seller.id} seller={seller} />
         ))}
       </div>
-    </div>
+      </div>
   );
 }
