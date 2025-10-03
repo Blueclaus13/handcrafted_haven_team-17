@@ -5,12 +5,12 @@ import styles from "../componentStyles/SellerCard.module.css";
 
 type Seller = {
   id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
+  firstname: string;   // ✅ match Prisma schema
+  lastname: string;    // ✅ match Prisma schema
+  username: string;    // ✅ match Prisma schema
   email: string;
   description?: string | null;
-  imageUrl?: string | null;
+  image_url?: string | null; // ✅ match Prisma schema
 };
 
 export default function SellerCard({ seller }: { seller: Seller }) {
@@ -18,10 +18,10 @@ export default function SellerCard({ seller }: { seller: Seller }) {
 
   return (
     <div className={styles.card}>
-      {seller.imageUrl ? (
+      {seller.image_url ? (
         <Image
-          src={seller.imageUrl}
-          alt={`${seller.firstName} ${seller.lastName}`}
+          src={seller.image_url}
+          alt={`${seller.firstname} ${seller.lastname}`}
           width={100}
           height={100}
           className={styles.avatar}
@@ -34,23 +34,15 @@ export default function SellerCard({ seller }: { seller: Seller }) {
           height={100}
           className={styles.avatar}
           onError={(e) => {
-            // Hide image if it fails, so initials show
             (e.target as HTMLImageElement).style.display = "none";
           }}
         />
       )}
 
-      {/* fallback initials if no image
-      {!seller.imageUrl && (
-        <div className={styles.initials}>
-          {seller.firstName[0]}
-        </div>
-      )} */}
-
       <h2 className={styles.name}>
-        {seller.firstName} {seller.lastName}
+        {seller.firstname} {seller.lastname}
       </h2>
-      <p className={styles.username}>@{seller.userName}</p>
+      <p className={styles.username}>@{seller.username}</p>
       {seller.description && (
         <p className={styles.description}>{seller.description}</p>
       )}

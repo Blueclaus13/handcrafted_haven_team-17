@@ -1,63 +1,72 @@
+// app/api/register/route.ts
 import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { z } from "zod";
-import prisma from "@/prisma/lib/prisma";
 
-const registerSchema = z.object({
-  firstName: z.string().min(2),
-  lastName: z.string().min(2),
-  userName: z.string().min(3),
-  email: z.string().email(),
-  password: z.string().min(6),
-  birthday: z.string().transform((val) => new Date(val)),
-  description: z.string().optional(),
-  isSeller: z.boolean().optional(),
-  imageUrl: z.string().optional(),
-});
+const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const data = registerSchema.parse(body);
 
-    // check if email or username already exists
-    const existingUser = await prisma.user.findFirst({
+    // Destructure with cleaner names from frontend payload
+    const {
+      firstName,
+      lastName,
+      userName,
+      email,
+      password,
+      birthday,
+      description,
+      isSeller,
+    } = body;
+
+    // ✅ Check for existing user by email or username
+    const userExists = await prisma.users.findFirst({
       where: {
-        OR: [
-          { email: data.email },
-          { userName: data.userName },
-        ],
+        OR: [{ email }, { username: userName }],
       },
     });
 
-    if (existingUser) {
+    if (userExists) {
       return NextResponse.json(
-        { error: "Email or username already in use" },
+        { error: "Email or username already taken" },
         { status: 400 }
       );
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    // ✅ Hash password securely
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
+    // ✅ Create user
+    const createdUser = await prisma.users.create({
       data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        userName: data.userName,
-        email: data.email,
-        password: hashedPassword,
-        birthday: data.birthday,
-        description: data.description,
-        isSeller: data.isSeller ?? false,
-        imageUrl: data.imageUrl,
+        id: crypto.randomUUID(),       // maps to "id" in schema
+        firstname: firstName,          // maps to "firstname" in schema
+        lastname: lastName,            // maps to "lastname" in schema
+        username: userName,            // maps to "username" in schema
+        email,                         // schema: "email"
+        password: hashedPassword,      // schema: "password"
+        birthday: new Date(birthday),  // schema: "birthday"
+        description: description || null, // schema: "description"
+        is_seller: isSeller,           // schema: "is_seller"
+        created_at: new Date(),        // schema: "created_at"
+        updated_at: new Date(),        // schema: "updated_at"
       },
     });
 
+    return NextResponse.json({
+      success: true,
+      user: {
+        id: createdUser.id,
+        email: createdUser.email,
+      },
+    });
+  } catch (err) {
+    console.error("Error registering user:", err);
     return NextResponse.json(
-      { user: { id: user.id, email: user.email, userName: user.userName } },
-      { status: 201 }
+      { error: "Something went wrong" },
+      { status: 500 }
     );
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 400 });
   }
 }

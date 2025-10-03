@@ -3,16 +3,16 @@ import SellerCard from "../ui/genComponents/SellerCard";
 import styles from "../ui/componentStyles/SellersPage.module.css";
 
 export default async function SellersPage() {
-  const sellers = await prisma.user.findMany({
-    where: { isSeller: true },
+  const sellers = await prisma.users.findMany({
+    where: { is_seller: true }, // ✅ match Prisma schema
     select: {
       id: true,
-      firstName: true,
-      lastName: true,
-      userName: true,
+      firstname: true,   // ✅ schema: firstname
+      lastname: true,    // ✅ schema: lastname
+      username: true,    // ✅ schema: username
       email: true,
       description: true,
-      imageUrl: true,
+      image_url: true,   // ✅ schema: image_url
     },
   });
 

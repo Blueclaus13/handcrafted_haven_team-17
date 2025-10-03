@@ -5,9 +5,9 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   text-align: center;
   transition: box-shadow 0.3s ease;
-  max-width: 280px;
+  width: 280px;
+  height: 300px;
   margin: auto;
-  width: 100%;
 }
 
 .card:hover {
