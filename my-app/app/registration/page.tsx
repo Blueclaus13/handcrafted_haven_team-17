@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import styles from "../ui/componentStyles/RegistrationPage.module.css";
+import Button from "../ui/genComponents/button";
 
 export default function RegisterForm() {
   const [error, setError] = useState("");
@@ -38,6 +39,7 @@ export default function RegisterForm() {
    return (
     <main className={styles.container}>
       <h1 className={styles.title}>Register</h1>
+      <hr/>
       <form className={styles.form} onSubmit={handleSubmit}>
 
         <div className={styles.field}>
@@ -81,7 +83,7 @@ export default function RegisterForm() {
         </div>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <button className={styles.button} type="submit">Register</button>
+        <Button className={styles.button} type="submit">Register</Button>
       </form>
     </main>
   );
