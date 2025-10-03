@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import { redirect } from "next/dist/server/api-utils";
 
 const prisma = new PrismaClient();
 
@@ -61,6 +62,8 @@ export async function POST(req: Request) {
         id: createdUser.id,
         email: createdUser.email,
       },
+      status: 201,
+      redirect: "/api/auth/signin",
     });
   } catch (err) {
     console.error("Error registering user:", err);

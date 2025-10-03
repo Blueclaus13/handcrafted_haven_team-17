@@ -1,26 +1,9 @@
+
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import prisma from "@/prisma/lib/prisma";
 
-// --- TypeScript type extensions ---
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      is_seller: boolean;
-    };
-  }
-
-  interface JWT {
-    id: string;
-    is_seller: boolean;
-  }
-}
-
-// --- NextAuth handler ---
 export const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -29,31 +12,24 @@ export const handler = NextAuth({
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+     
       async authorize(credentials) {
-        console.log("Credentials:", credentials);
         if (!credentials?.email || !credentials.password) return null;
-        console.log("Connecting to database...");
-        console.log("email:", credentials.email);
-        console.log("password:", credentials.password);
 
-        // Lookup user (case-insensitive email)
         const user = await prisma.users.findFirst({
           where: { email: { equals: credentials.email, mode: "insensitive" } },
         });
-
         if (!user) return null;
 
-        // Validate password
         const isValid = await bcrypt.compare(credentials.password, user.password);
         if (!isValid) return null;
-        console.log("User authenticated:", user);
 
-        // Return user object for NextAuth
+        // ensure is_seller is ALWAYS a boolean
         return {
           id: user.id,
           name: `${user.firstname} ${user.lastname}`,
           email: user.email,
-          is_seller: user.is_seller,
+          is_seller: !!user.is_seller,
         };
       },
     }),
@@ -62,15 +38,19 @@ export const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.is_seller = user.is_seller as boolean;
+        
+        token.id = user.id as string;
+        token.is_seller = user.is_seller;
+;
       }
       return token;
     },
+
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id;
-        session.user.is_seller = token.is_seller;
+      if (session?.user) {
+        
+        session.user.id = token.id as string;
+        session.user.is_seller = Boolean(token.is_seller);
       }
       return session;
     },
@@ -81,4 +61,3 @@ export const handler = NextAuth({
 });
 
 export { handler as GET, handler as POST };
-
