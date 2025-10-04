@@ -7,7 +7,7 @@ export default async function ProductList() {
     
         return (
             <div className={style.container}>
-                {products.map((product, i)=> {
+                {products.map((product)=> {
                     return (
                         <div 
                         key={product.id}

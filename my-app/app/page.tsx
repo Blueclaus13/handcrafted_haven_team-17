@@ -1,5 +1,3 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 import Hero from "./ui/genComponents/hero";
 import RandomProducts from "./ui/home/ProductPreview";
 

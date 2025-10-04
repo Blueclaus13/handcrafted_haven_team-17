@@ -11,7 +11,7 @@ export default async function RandomProducts() {
                 Product Preview
             </h2>
             <div className={style.grid}>
-            {randomProducts.map((product, i)=> {
+            {randomProducts.map((product)=> {
                 return (
                     <div 
                     key={product.id}

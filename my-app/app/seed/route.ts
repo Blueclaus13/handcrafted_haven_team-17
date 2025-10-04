@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import postgres from 'postgres';
 import { products } from '../lib/placeholder_data';
 

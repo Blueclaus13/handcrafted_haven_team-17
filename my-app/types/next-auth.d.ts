@@ -1,5 +1,5 @@
 // src/types/next-auth.d.ts
-import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
+import { DefaultSession, DefaultUser } from "next-auth";
 
 declare module "next-auth" {
   // extend the built-in User (from adapters or .authorize return)
