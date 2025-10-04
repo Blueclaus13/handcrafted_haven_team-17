@@ -1,9 +1,10 @@
 import prisma from "@/prisma/lib/prisma";
 import SellerCard from "../ui/seller/SellerCard";
 import styles from "../ui/componentStyles/SellersPage.module.css";
+import { Seller } from "../lib/definitions";
 
 export default async function SellersPage() {
-  const sellers = await prisma.users.findMany({
+  const sellers: Seller[] = await prisma.users.findMany({
     where: { is_seller: true }, 
     select: {
       id: true,
