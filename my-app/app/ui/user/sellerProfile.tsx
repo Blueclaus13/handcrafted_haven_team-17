@@ -62,7 +62,7 @@ export default function SellerProfilePage({
                 </div>
             </section>
 
-            {/* Manage Products */}
+            {/* ONLY SELLER visible */}
            {userData.is_seller && 
            (<div className={style.sellerSections}>
                 <Button 
@@ -128,11 +128,13 @@ export default function SellerProfilePage({
                 <section className="tablecontainer">
                     <table className={style.productTable}>
                         <thead>
-                            <th>Product Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Image</th>
-                            <th>Edit</th>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Image</th>
+                                <th>Edit</th>
+                            </tr>
                         </thead>
                         <tbody>
                 {products?.map((product)=>(
