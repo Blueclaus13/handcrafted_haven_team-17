@@ -7,6 +7,7 @@ import Button from "../genComponents/button";
 import style from "../componentStyles/profile.module.css";
 import {addProduct }from "../../lib/actions";
 import { Product, User } from "@/app/lib/definitions";
+import Modal from "../genComponents/modal";
 const defaultImage = "placeholder-picture-profile.jpg";
 
 export default function SellerProfilePage({
@@ -28,10 +29,13 @@ export default function SellerProfilePage({
     addProduct, 
     initialActionState
     );
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    function toggleModal() {
+     setShowModal(!showModal);
+    }
 
   if (!userData) return <p>Loading...</p>;
-    
-
 
     return (
         <div className={style.profileContainer}>
@@ -61,8 +65,16 @@ export default function SellerProfilePage({
             {/* Manage Products */}
            {userData.is_seller && 
            (<div className={style.sellerSections}>
-                <section className={style.addProductSection}>
-                    <h2 >Add New Product</h2>
+                <Button 
+                className={style.btnAddNewProduct}
+                type="button"
+                onClick={toggleModal}
+                    >Add new Product</Button>
+                <Modal  
+                    open={showModal} 
+                    onClose={toggleModal}
+                    title="Add New Product">
+                    <section className={style.addProductSection}>
                     <form action={formAction} encType="multipart/form-data" className={style.formStyle}>
                         <div className={style.formgroup}>
                         <label  htmlFor="productName">Product Name:</label>
@@ -112,6 +124,7 @@ export default function SellerProfilePage({
                             <p className={style.errorMessage}>{actionState.errorMessage}</p>)}
                     </form>
             </section>
+                </Modal>
                 <section className="tablecontainer">
                     <table className={style.productTable}>
                         <thead>
