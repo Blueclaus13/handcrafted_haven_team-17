@@ -1,51 +1,151 @@
-// app/seller/profile/page.tsx
+"use client";
+import {  useState, useActionState } from "react";
 
-export default function SellerProfilePage() {
+
+import Image from "next/image"; 
+import Button from "../genComponents/button";
+import style from "../componentStyles/profile.module.css";
+import {addProduct }from "../../lib/actions";
+import { Product, User } from "@/app/lib/definitions";
+const defaultImage = "placeholder-picture-profile.jpg";
+
+export default function SellerProfilePage({
+  userData,
+  productsList,
+}: {
+  userData: User;
+  productsList: Product[];
+})
+     {
+    const [products, setProducts] = useState<Product[]>(productsList);
+    console.log(products)
+
+    const initialActionState = {
+        errorMessage: "",
+        success: false,
+    };
+    const [actionState, formAction, isPending] = useActionState(
+    addProduct, 
+    initialActionState
+    );
+
+  if (!userData) return <p>Loading...</p>;
+    
+
+
     return (
-        <main className="max-w-3xl mx-auto p-6 space-y-8">
-            <h1 className="text-3xl font-bold mb-6">Seller Profile</h1>
-
-            {/* Seller Info */}
-            <section className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
-                <div className="space-y-2">
-                    <p><span className="font-medium">Name:</span> Blueclaus</p>
-                    <p><span className="font-medium">Email:</span> blueclaus@example.com</p>
-                    <p><span className="font-medium">Store:</span> Handcrafted Wonders</p>
+        <div className={style.profileContainer}>
+            <section className={style.profileSection}>
+                <h2>Profile Information</h2>
+                <div className={style.profileInfo}>
+                    <div className={style.field}>
+                        <p><span className={style.label}>Name: </span> {userData.firstname} {userData.lastname}</p>
+                        <p><span className={style.label}>Email: </span>{userData.email}</p>
+                        <p><span className={style.label}>Birthday: </span> {userData.birthday.toLocaleDateString()}</p>
+                        <p ><span className={style.label}>Member since: </span> {userData.created_at.toLocaleDateString()}</p>
+                        </div>
+                    <Image 
+                    src={`/users/${userData.image_url|| defaultImage}`}
+                    alt={`${userData.firstname} ${userData.lastname} Picture`}
+                    width={50}
+                    height={50}
+                    className={style.profilePicture}
+                    />
+                    <Button 
+                     type="button" className={style.profileButton}>
+                        Edit Profile
+                    </Button>  
                 </div>
             </section>
 
             {/* Manage Products */}
-            <section className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">My Products</h2>
-                <ul className="space-y-3">
-                    <li className="border rounded p-3 flex justify-between items-center">
-                        <span>Handmade Necklace</span>
-                        <button className="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700">
-                            Edit
-                        </button>
-                    </li>
-                    <li className="border rounded p-3 flex justify-between items-center">
-                        <span>Wooden Sculpture</span>
-                        <button className="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700">
-                            Edit
-                        </button>
-                    </li>
-                </ul>
+           {userData.is_seller && 
+           (<div className={style.sellerSections}>
+                <section className={style.addProductSection}>
+                    <h2 >Add New Product</h2>
+                    <form action={formAction} encType="multipart/form-data" className={style.formStyle}>
+                        <div className={style.formgroup}>
+                        <label  htmlFor="productName">Product Name:</label>
+                        <input 
+                            type="text" 
+                            id="productName" 
+                            name="productName"
+                            placeholder="Product Name" 
+                            required/>
+                        </div>
+                        <div className={style.formgroup}>
+                        <label htmlFor="description">Product Description: </label>
+                        <textarea 
+                            placeholder="Product Description"
+                            id="description"
+                            name="description"
+                            required  />
+                        </div>
+                        <div className={style.formgroup}>
+                            <label htmlFor="price">Price</label>
+                            <input
+                                type="number"
+                                id="price"
+                                name="price"
+                                placeholder="0.00"
+                                min={0}
+                                step={0.01}
+                                required
+                            />
+                        </div>
+                        <div className={style.formgroup}>
+                            <label htmlFor="image_file">Upload your photo (.png)</label>
+                            <input
+                                type="file"
+                                id="image_file"
+                                name="image_file"
+                                accept="image/png"
+                                required
+                                //onChange={handleFileChange}
+                            />
+                        </div>
+                        <input type="hidden" name="userId" value={userData.id} />
+                        <Button type="submit" disabled={isPending}>
+                            {isPending ? "Adding..." : "Add Product"}
+                        </Button>
+                        {actionState?.errorMessage && (
+                            <p className={style.errorMessage}>{actionState.errorMessage}</p>)}
+                    </form>
             </section>
-
-            {/* Add Product Form */}
-            <section className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
-                <form className="flex flex-col gap-4">
-                    <input type="text" placeholder="Product Name" className="border rounded p-2" />
-                    <textarea placeholder="Product Description" className="border rounded p-2" />
-                    <input type="number" placeholder="Price" className="border rounded p-2" />
-                    <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                        Add Product
-                    </button>
-                </form>
+                <section>
+                {products.map((product)=> {
+                    return (
+                    <div 
+                        key={product.id}
+                        className={style.card}
+                        >
+                            <div className={style.productListImage}>
+                                <Image 
+                                    src={product.image_url}
+                                    alt={`Picture of ${product.name}`}
+                                    width={250}
+                                    height={0}      // still required, but won’t matter with auto style
+                                    style={{ height: "auto" }}
+                                />
+                            </div>
+                            <div className={style.productListName}>
+                                <p>{product.name}</p>
+                            </div>
+                            <div className={style.productListDescription}>
+                                <p>{product.description}</p>
+                            </div>
+                            <div className={style.productListPrice}>
+                                <p>
+                                    {product.price}
+                                </p>
+                            </div>
+                            
+                    </div>
+                    );
+                })}
             </section>
-        </main>
+            
+           </div>)}   
+        </div>
     );
 }

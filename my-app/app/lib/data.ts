@@ -1,5 +1,5 @@
 import postgres from 'postgres';
-import{Seller }from "../lib/definitions";
+import{Product, Seller, User }from "../lib/definitions";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -73,6 +73,44 @@ export async function fetchSellers() {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all sellers.');
   }
-    
-    
+}
+
+  export async function fetchUser(userId: string) {
+    try{
+
+        const user: User[] = await sql<User[]>`
+          SELECT 
+            id, 
+            firstname, 
+            lastname, 
+            username, 
+            email, 
+            description, 
+            image_url,
+            birthday,
+            is_seller,
+            created_at,
+            updated_at
+          FROM users
+          WHERE id = ${userId};`;
+        return user[0];
+    }catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function fetchUserProducts(userId: string) {
+  try{
+      const products: Product[] = await sql<Product[]>`
+      SELECT p.id, p.name, p.price, p.description, p.image_url
+      FROM users u
+      LEFT JOIN products p ON u.id = p.seller_id
+      WHERE u.id = ${userId}::uuid;`;
+ return products;
+    }catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch user products list.');
+  }
+
 }

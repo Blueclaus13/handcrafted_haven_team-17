@@ -15,7 +15,7 @@ async function seedProducts() {
       price VARCHAR(50) NOT NULL,
       description TEXT NOT NULL,
       image_url VARCHAR(255) NOT NULL,
-      seller_id INT NOT NULL
+      seller_id UUID NOT NULL
     );
   `;
 
