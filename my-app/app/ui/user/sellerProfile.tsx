@@ -112,39 +112,55 @@ export default function SellerProfilePage({
                             <p className={style.errorMessage}>{actionState.errorMessage}</p>)}
                     </form>
             </section>
-                <section>
-                {products.map((product)=> {
-                    return (
-                    <div 
-                        key={product.id}
-                        className={style.card}
-                        >
-                            <div className={style.productListImage}>
-                                <Image 
-                                    src={product.image_url}
-                                    alt={`Picture of ${product.name}`}
-                                    width={250}
-                                    height={0}      // still required, but won’t matter with auto style
-                                    style={{ height: "auto" }}
-                                />
-                            </div>
-                            <div className={style.productListName}>
-                                <p>{product.name}</p>
-                            </div>
-                            <div className={style.productListDescription}>
-                                <p>{product.description}</p>
-                            </div>
-                            <div className={style.productListPrice}>
-                                <p>
-                                    {product.price}
-                                </p>
-                            </div>
-                            
-                    </div>
-                    );
-                })}
+                <section className="tablecontainer">
+                    <table className={style.productTable}>
+                        <thead>
+                            <th>Product Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Edit</th>
+                        </thead>
+                        <tbody>
+                {products?.map((product)=>(
+                            <tr  key={product.id}>
+                                <td>
+                                    <div className={style.productListImage}>
+                                        <Image 
+                                            src={product.image_url}
+                                            alt={`Picture of ${product.name}`}
+                                            width={50}
+                                            height={50}    
+                                            style={{ height: "auto" }}
+                                        />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p>{product.name}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div >
+                                       <p>{product.description}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div >
+                                        <p> {product.price}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <Button
+                                        type="button"
+                                        id={product.id}
+                                    >Edit</Button> 
+                                </td>
+                            </tr>
+                        ))}
+                 </tbody>
+            </table>
             </section>
-            
            </div>)}   
         </div>
     );

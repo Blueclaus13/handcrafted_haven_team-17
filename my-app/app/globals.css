@@ -116,3 +116,28 @@ img {
 .smallText{
   font-size: var(--small-font);
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even){background-color: var(--light-color);}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--tertiary-color);
+  color: white;
+}
+.tablecontainer{
+  overflow-x: auto;
+}

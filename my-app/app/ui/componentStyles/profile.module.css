@@ -77,7 +77,13 @@ grid-column: 2;
   border-color: var(--first-contrast-color); 
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
 }
-
+.productTable{
+  margin: 2%;
+  max-width: 95%;
+}
+.productListImage{
+  text-align: center;
+}
 @media (max-width: 650px) {
     .profileInfo{
         width: 95%;
