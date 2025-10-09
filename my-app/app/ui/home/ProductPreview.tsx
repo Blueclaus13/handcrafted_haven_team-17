@@ -1,6 +1,7 @@
 import { getRandomProducts } from "@/app/lib/data";
 import Image from "next/image";
 import style from "../componentStyles/preview.module.css";
+import Link from "next/link";
 
 export default async function RandomProducts() {
     const randomProducts = await getRandomProducts();
@@ -13,8 +14,10 @@ export default async function RandomProducts() {
             <div className={style.grid}>
             {randomProducts.map((product, i)=> {
                 return (
-                    <div 
+
+                    <Link
                     key={product.id}
+                    href={`/marketplace/${product.id}`}
                     className={style.card}
                     >
                         <div className={style.productPreviewImage}>
@@ -34,7 +37,7 @@ export default async function RandomProducts() {
                                 {product.price}
                             </p>
                         </div>
-                    </div>
+                    </Link>
                 );
             })}
             </div>
