@@ -59,7 +59,7 @@ grid-column: 2;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-
+/* form */
 
 .formgroup{
   margin-bottom: 1rem;
@@ -92,6 +92,12 @@ grid-column: 2;
 }
 .productListImage{
   text-align: center;
+}
+.editProductLink{
+  color: var(--tertiary-color);
+}
+.editProductLink:hover{
+  color: var(--primary-color);
 }
 @media (max-width: 650px) {
     .profileInfo{

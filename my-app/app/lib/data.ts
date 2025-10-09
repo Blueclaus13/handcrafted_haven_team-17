@@ -114,3 +114,27 @@ export async function fetchUserProducts(userId: string) {
   }
 
 }
+
+export async function getProductById(productId: string) {
+    try {
+      const product: Product[] = await sql<Product[]>`
+        SELECT id, name, description, price, image_url, seller_id
+        FROM products
+        WHERE id = ${productId}::uuid;`;
+      
+      //console.log(product[0]);
+  
+      return product.map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description ?? "No description available",
+        price: p.price ?? "N/A",
+        image_url: p.image_url,
+        seller_id: p.seller_id
+      }));
+      
+    } catch (err) {
+      console.error("Error geting Product by Id:", err);
+      return [];
+    }
+  }

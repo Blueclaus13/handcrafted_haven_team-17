@@ -1,6 +1,6 @@
 "use client";
 import {  useState, useActionState } from "react";
-
+import { useRouter } from "next/navigation";
 
 import Image from "next/image"; 
 import Button from "../genComponents/button";
@@ -8,6 +8,7 @@ import style from "../componentStyles/profile.module.css";
 import {addProduct }from "../../lib/actions";
 import { Product, User } from "@/app/lib/definitions";
 import Modal from "../genComponents/modal";
+import Link from "next/link";
 const defaultImage = "placeholder-picture-profile.jpg";
 
 export default function SellerProfilePage({
@@ -21,6 +22,8 @@ export default function SellerProfilePage({
     const [products, setProducts] = useState<Product[]>(productsList);
     console.log(products)
 
+    const router = useRouter();
+
     const initialActionState = {
         errorMessage: "",
         success: false,
@@ -29,11 +32,17 @@ export default function SellerProfilePage({
     addProduct, 
     initialActionState
     );
-    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showAddProductModal, setShowAddProductModal] = useState<boolean>(false);
+    const [showEditProductModal, setShowEditProductModal] = useState<boolean>(false);
+    const [showEditUserModal, setShowEditUserModal] = useState<boolean>(false);
 
-    function toggleModal() {
-     setShowModal(!showModal);
+    function toggleAddProductModal() {
+     setShowAddProductModal(!showAddProductModal);
     }
+    function handleEditProfile(){
+        router.push(`profile/editUser/${userData.id}`); 
+    }
+    
 
   if (!userData) return <p>Loading...</p>;
 
@@ -56,7 +65,9 @@ export default function SellerProfilePage({
                     className={style.profilePicture}
                     />
                     <Button 
-                     type="button" className={style.profileButton}>
+                     type="button" 
+                     className={style.profileButton}
+                     onClick={handleEditProfile}>
                         Edit Profile
                     </Button>  
                 </div>
@@ -68,11 +79,11 @@ export default function SellerProfilePage({
                 <Button 
                 className={style.btnAddNewProduct}
                 type="button"
-                onClick={toggleModal}
+                onClick={toggleAddProductModal}
                     >Add new Product</Button>
                 <Modal  
-                    open={showModal} 
-                    onClose={toggleModal}
+                    open={showAddProductModal} 
+                    onClose={toggleAddProductModal}
                     title="Add New Product">
                     <section className={style.addProductSection}>
                     <form action={formAction} encType="multipart/form-data" className={style.formStyle}>
@@ -125,6 +136,7 @@ export default function SellerProfilePage({
                     </form>
             </section>
                 </Modal>
+
                 <section className="tablecontainer">
                     <table className={style.productTable}>
                         <thead>
@@ -166,16 +178,18 @@ export default function SellerProfilePage({
                                     </div>
                                 </td>
                                 <td>
-                                    <Button
-                                        type="button"
-                                        id={product.id}
-                                    >Edit</Button> 
+                                    <Link
+                                        href={`/profile/editProduct/${product.id}`}
+                                        className={style.editProductLink}
+                                        >Edit</Link>
                                 </td>
                             </tr>
                         ))}
                  </tbody>
             </table>
             </section>
+
+            
            </div>)}   
         </div>
     );
