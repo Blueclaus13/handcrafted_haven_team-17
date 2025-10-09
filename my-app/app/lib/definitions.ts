@@ -1,11 +1,11 @@
 
 
 export type Seller = {
-  id: string;           // UUID
-  firstName: string;    // NOT NULL
-  lastName: string;     // NOT NULL
-  userName: string;     // NOT NULL
-  email: string;        // NOT NULL
+  id: string;       
+  firstname: string;    
+  lastname: string;     
+  username: string;   
+  email: string;        
   description: string | null;
-  imageUrl: string | null;
+  image_url: string | null;
 };

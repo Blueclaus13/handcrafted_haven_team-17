@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model products {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String    @db.VarChar(255)
+  price       String    @db.VarChar(50)
+  description String
+  image_url   String    @db.VarChar(255)
+  seller_id   Int
+  reviews     reviews[]
+}
+
+model reviews {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  product_id String   @db.Uuid
+  score      Float
+  summary    String
+  products   products @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model users {
+  id          String    @id @db.Uuid
+  firstname   String    @db.VarChar(255)
+  lastname    String    @db.VarChar(255)
+  username    String    @db.VarChar(50)
+  email       String    @db.VarChar(100)
+  password    String
+  birthday    DateTime  @db.Date
+  description String?
+  image_url   String?   @db.VarChar(255)
+  is_seller   Boolean?  @default(false)
+  created_at  DateTime  @db.Timestamp(6)
+  updated_at  DateTime? @db.Timestamp(6)
+}

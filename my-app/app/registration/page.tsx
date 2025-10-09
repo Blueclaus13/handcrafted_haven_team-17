@@ -22,9 +22,11 @@ export default function RegisterForm() {
     };
 
     const res = await fetch("/api/register", {
-      method: "POST",
-      body: JSON.stringify(body),
-    });
+  method: "POST",
+  headers: { "Content-Type": "application/json" }, // ✅ add this
+  body: JSON.stringify(body),
+});
+
 
     if (!res.ok) {
       const data = await res.json();

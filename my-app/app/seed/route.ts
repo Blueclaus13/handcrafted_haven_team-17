@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import postgres from 'postgres';
 import { v4 as uuidv4 } from 'uuid';
 import { products as placeholderProducts } from '../lib/placeholder_data';
