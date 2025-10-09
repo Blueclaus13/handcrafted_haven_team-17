@@ -1,10 +1,8 @@
 // This file contains placeholder data that we'll replace with real data when database is fully set up and integrated.
 
-import { v4 as uuid4 } from 'uuid';
 
 export const products = [
     {
-        id: uuid4(),
         name: "Patchwork Cotton Mother's Quilt",
         price: "$139.90",
         description: "Handmade Mother's Quilt for Sale using a variety of colors, fabrics, and made from 100% cotton.",
@@ -22,7 +20,6 @@ export const products = [
         sellerId: 1
     },
     {
-        id: uuid4(),
         name: "Brown Leather Handbag",
         price: "$89.00",
         description: "Authentic 100% Brown Leather handbag with gold chain handle.",
@@ -36,7 +33,6 @@ export const products = [
         sellerId: 2 
     },
     {
-        id: uuid4(),
         name: "Waves by Simon Painter",
         price: "$249.50",
         description: "Beautiful painting of ocean waves by talented artist Simon Painter.",
@@ -58,7 +54,6 @@ export const products = [
         sellerId: 3
     },
     {
-        id: uuid4(),
         name: "Country Mountains by Simon Painter",
         price: "$229.60",
         description: "Breathtaking and nostalgic mountain range perfect for any room in your home by artist, Simon Painter.",
@@ -72,7 +67,6 @@ export const products = [
         sellerId: 3
     },
     {
-        id: uuid4(),
         name: "Sapphire Crescent Moon Necklace",
         price: "$129.90",
         description: "Handcrafted gold crescent moon necklace with sapphire.",
@@ -90,7 +84,6 @@ export const products = [
         sellerId: 4
     },
     {
-        id: uuid4(),
         name: "Mens 5K Rosegold Wedding Band",
         price: "$400.00",
         description: "Authentic gold wedding band with comfortable fit for men.",
@@ -104,10 +97,9 @@ export const products = [
         sellerId: 4
     },
     {
-        id: uuid4(),
         name: "Ivory Stone Vase",
         price: "$74.00",
-        description: "Vintage Artisan crafted Ivory stone vase, ",
+        description: "Vintage Artisan crafted Ivory stone vase ",
         imageUrl: "/images/products/vase.jpg",
         reviews: [
             {
@@ -118,7 +110,6 @@ export const products = [
         sellerId: 5
     },
     {
-        id: uuid4(),
         name: "9 Piece Wooden Dish Set",
         price: "$213.75",
         description: "Artisan crafted natural wood 9 piece dish set comes with 3 bowls, 5 plates, and 1 shallow plate.",
