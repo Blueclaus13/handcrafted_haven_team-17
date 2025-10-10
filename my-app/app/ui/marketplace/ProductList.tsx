@@ -4,7 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import style from "../componentStyles/products.module.css";
 
-export default function ProductList({ products }: { products: any[] }) {
+type Product = {
+  id: string | number;
+  name: string;
+  description?: string;
+  price: string | number;
+  imageUrl: string;
+  avgScore?: number;
+};
+
+export default function ProductList({ products }: { products: Product[] }) {
   return (
     <div className={style.container}>
       {products.length > 0 ? (
