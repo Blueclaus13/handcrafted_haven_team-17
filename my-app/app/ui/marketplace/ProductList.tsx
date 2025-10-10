@@ -1,6 +1,4 @@
-"use client";
-
-import Link from "next/link";
+import getAllProducts from "@/app/lib/data";
 import ClientFilteredGrid from "./clientfilteredgrid";
 
 /**
