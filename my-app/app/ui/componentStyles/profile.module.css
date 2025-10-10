@@ -1,0 +1,107 @@
+.profileContainer{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto;
+  margin-top: 5px;
+
+}
+.btnAddNewProduct{
+  grid-column: 2;
+}
+.profileInfo{
+    margin: 1%;
+    margin-right: 100px;
+    border: 2px solid var(--tertiary-color);
+    border-radius: 12px;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 1%;
+    justify-items: center;
+    width: 90%;
+    align-content: center;
+}
+.profileInfo p {
+    margin: 2px;
+}
+.profilePicture{
+    grid-column: 1/span;
+    place-self: center;
+    grid-row: 1;
+}
+.label{
+    font-weight: 900;
+    color: var(--tertiary-color);
+}
+
+.field{
+grid-column: 2;
+}
+.profileButton{
+    grid-column: 1/3;
+    width: 100%;
+}
+
+.profileSection{
+    margin: 1%;
+}
+
+.sellerSections{
+    margin-left: 1%;
+}
+.addProductSection {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* form */
+
+.formgroup{
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.formgroup label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.formgroup input,
+.formgroup textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.formgroup input:focus,
+.formgroup textarea:focus {
+  outline: none;
+  border-color: var(--first-contrast-color); 
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+.productTable{
+  margin: 2%;
+  max-width: 95%;
+}
+.productListImage{
+  text-align: center;
+}
+.editProductLink{
+  color: var(--tertiary-color);
+}
+.editProductLink:hover{
+  color: var(--primary-color);
+}
+@media (max-width: 650px) {
+    .profileInfo{
+        width: 95%;
+    }
+
+}

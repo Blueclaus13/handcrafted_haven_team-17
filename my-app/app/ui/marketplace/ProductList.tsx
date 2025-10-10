@@ -1,4 +1,6 @@
-import getAllProducts from "@/app/lib/data";
+"use client";
+
+import Link from "next/link";
 import ClientFilteredGrid from "./clientfilteredgrid";
 
 /**
