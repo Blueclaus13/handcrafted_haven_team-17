@@ -160,7 +160,7 @@ export async function fetchUserProducts(userId: string) {
 
 }
 
-export async function getProductById(productId: string) {
+export async function getOnlyProductById(productId: string) {
     try {
       const product: Product[] = await sql<Product[]>`
         SELECT id, name, description, price, image_url, seller_id
