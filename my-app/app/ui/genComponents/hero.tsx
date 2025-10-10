@@ -9,9 +9,9 @@ export default function Hero() {
     <section className={styles.hero}>
       {/* Left: Text */}
       <div className={styles.content}>
-        <h1 className={styles.title}>Welcome to My App</h1>
+        <h1 className={styles.title}>Welcome to Handcrafted Haven</h1>
         <p className={styles.subtitle}>
-          Fast, scalable, and modern web apps made simple with Next.js.
+          Join our vast marketplace of artisancrafts and goods.
         </p>
         <Link href="/registration" className={styles.registerLink}>
           Register →

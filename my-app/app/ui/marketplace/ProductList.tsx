@@ -30,7 +30,7 @@ export default function ProductList({ products }: { products: any[] }) {
               <p>{product.description}</p>
             </div>
             <div className={style.productListPrice}>
-              <p>{product.price}</p>
+              <p>${product.price}</p>
             </div>
             <div className={style.productListScore}>
               Review Score: {product.avgScore?.toFixed(1) ?? "N/A"}

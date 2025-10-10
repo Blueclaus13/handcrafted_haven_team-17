@@ -4,7 +4,7 @@
   justify-content:space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: var(--tertiary-color);
+  background: linear-gradient(180deg, #8B5E3C 0%, #946642 50%, #9F7048 100%);
   position: sticky;      
   top: 0;                
   left: 0;               
@@ -19,11 +19,13 @@
   display: flex;
   align-items: center;
   min-width: 200px;
+  max-width: 220px;
   gap: 10px;
-  padding: 1%;
+  padding: .5%;
   border-radius: 10%;
   background-color: var(--primary-color);
   color: var(--first-contrast-color);
+  text-align: center;
 }
 
 .signProfile {

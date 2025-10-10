@@ -1,7 +1,8 @@
 :root {
   --background: #fff;
-  --font-title: var(--font-lora), Helvetica, sans-serif;
-  --font-text: var(--font-lora), Arial, sans-serif;
+  --font-heading: "Quicksand", sans-serif;
+  --font-body: "Nunito", sans-serif;
+  --font-fancy: "Playfair Display", serif;
     /* colors */
   --primary-color: #C22069;
   --secondary-color: #F26FA7;
@@ -32,7 +33,7 @@ html, body {
 body {
   color: var(--dark-color);
   background: var(--background);
-  font-family: var(--font-text), Helvetica, sans-serif;
+  font-family: var(--font-body);
   font-size: var(--font-base);
   margin: 0;
 }
@@ -46,24 +47,24 @@ main{
 }
 
 h1{
-  font-family: var(--font-title);
+  font-family: var(--font-heading);
   font-size: 4rem;
   margin-bottom: 1rem;
 }
 h2{
-  font-family: var(--font-title);
+  font-family: var(--font-heading);
   color: var(--primary-color);
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 h3{
-  font-family: var(--font-title);
+  font-family: var(--font-heading);
   color: var(--primary-color);
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 h4{
-  font-family: var(--font-title);
+  font-family: var(--font-heading);
   color: var(--primary-color);
   font-size: 1.5rem;
   margin-bottom: 1rem;
@@ -113,6 +114,9 @@ img {
   color: var(--light-color);
 }
 
-.smallText{
-  font-size: var(--small-font);
+.logoText{
+  font-family: var(--font-fancy);
+  color: white; /* or your logo accent color */
+  letter-spacing: 1px;
+  margin-left: 0.5rem;
 }
