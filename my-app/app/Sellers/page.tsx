@@ -21,9 +21,6 @@ export default async function SellersPage() {
     <div className={styles.container}>
       <div className={styles.productsGrid}>
       </div>
-        <h2>
-          Explore Our Talented Sellers
-        </h2>
       <div className={styles.grid}> 
         {sellers?.map((seller) => (
           <SellerCard key={seller.id} seller={seller} />

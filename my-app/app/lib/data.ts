@@ -32,6 +32,51 @@ export default async function getAllProducts() {
     }
   }
 
+export async function getProductById(productId: string) {
+  try {
+    // 1️⃣ Fetch the product
+    const [product] = await sql`
+      SELECT
+        id,
+        name,
+        description,
+        price,
+        image_url
+      FROM products
+      WHERE id = ${productId}
+    `;
+
+    if (!product) return null;
+
+    // 2️⃣ Fetch all reviews for this product
+    const reviews = await sql`
+      SELECT
+        id,
+        product_id,
+        score,
+        summary
+      FROM reviews
+      WHERE product_id = ${productId}
+    `;
+
+    return {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.image_url,
+      reviews: reviews.map((r) => ({
+        id: r.id,
+        score: r.score,
+        summary: r.summary,
+      })),
+    };
+  } catch (err) {
+    console.error('Error fetching product by ID:', err);
+    return null;
+  }
+}
+
 export async function getRandomProducts(limit: number = 3) {
     try {
       const products = await sql`
