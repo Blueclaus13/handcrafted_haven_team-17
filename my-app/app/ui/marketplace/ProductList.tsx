@@ -1,4 +1,4 @@
-import getAllProducts from "@/app/lib/data";
+
 import ClientFilteredGrid from "./clientfilteredgrid";
 
 /**
@@ -6,7 +6,15 @@ import ClientFilteredGrid from "./clientfilteredgrid";
  * - Fetches all products once (SSR)
  * - Hands them to the client grid which handles interactive filtering
  */
-export default async function ProductList() {
-  const products = await getAllProducts();
+export type Product = {
+  id: string | number;
+  name: string;
+  description: string;
+  price: number | string;
+  imageUrl: string;
+  avgScore: number;
+};
+export default async function ProductList({ products }: { products: Product[] }) {
+  
   return <ClientFilteredGrid products={products} />;
 }
