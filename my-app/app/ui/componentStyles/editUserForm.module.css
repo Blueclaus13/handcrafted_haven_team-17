@@ -1,0 +1,43 @@
+.container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.formgroup{
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.formgroup label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.formgroup input,
+.formgroup textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.formgroup input:focus,
+.formgroup textarea:focus {
+  outline: none;
+  border-color: var(--first-contrast-color); 
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+.buttonGroup{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.formgroup textarea {
+  resize: vertical;
+  min-height: 100px;
+}

@@ -1,0 +1,105 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  /* Main product info card */
+  .productSection {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .productWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .productWrapper {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+  
+  .image {
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+  }
+  
+  .details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description {
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  
+  .price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    background: #f9f9f9;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  
+  /* Reviews section separated visually */
+  .reviews {
+    background: #fef7fa;
+    border-radius: 1rem;
+    margin-top: 20px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  
+  .reviews h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+    border-bottom: 2px solid #f0c0d0;
+    padding-bottom: 0.5rem;
+  }
+  
+  .reviewList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .reviewItem {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .reviewItem:last-child {
+    border-bottom: none;
+  }
+  
+  .reviewScore {
+    font-weight: 500;
+    color: #c2185b;
+    margin-bottom: 0.25rem;
+  }
