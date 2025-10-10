@@ -31,3 +31,13 @@
   border-color: var(--first-contrast-color); 
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
 }
+.buttonGroup{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.formgroup textarea {
+  resize: vertical;
+  min-height: 100px;
+}

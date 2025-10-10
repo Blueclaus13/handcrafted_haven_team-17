@@ -141,10 +141,10 @@ export default function SellerProfilePage({
                     <table className={style.productTable}>
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Product Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
-                                <th>Image</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
