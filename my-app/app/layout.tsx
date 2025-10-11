@@ -1,5 +1,6 @@
-import Layout from "./ui/genComponents/layout"; 
+import Layout from "./ui/genComponents/layout";
 import "./globals.css";
+import Providers from "@/app/providers";
 
 export default function RootLayout({
   children,
@@ -8,8 +9,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body >
-        <Layout>{children}</Layout>
+      <body>
+        {/* Wrap everything in the SessionProvider */}
+        <Providers>
+          <Layout>{children}</Layout>
+        </Providers>
       </body>
     </html>
   );
