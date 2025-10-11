@@ -20,7 +20,7 @@ export default function SellerCard({ seller }: { seller: Seller }) {
     <div className={styles.card}>
       {seller.image_url ? (
         <Image
-          src={seller.image_url}
+          src={`/users/${seller.image_url}`}
           alt={`${seller.firstname} ${seller.lastname}`}
           width={100}
           height={100}

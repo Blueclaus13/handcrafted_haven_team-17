@@ -19,7 +19,6 @@ export default async function SellersPage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Sellers</h1>
       <div className={styles.productsGrid}>
       </div>
         <h2>
