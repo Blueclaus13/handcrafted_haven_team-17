@@ -17,7 +17,7 @@ export default function Header() {
         height={50}
         src="/images/placeholder-logo.png" 
         alt="placeholder logo" />
-        <p className='smallText'>HANDCRAFTED</p>
+        <p className='logoText'>Handcrafted Haven</p>
     </div>
     <Nav/>
     <div className={style.signProfile}>

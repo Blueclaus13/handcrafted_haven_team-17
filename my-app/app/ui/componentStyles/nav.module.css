@@ -19,10 +19,18 @@
   font-weight: 600;
   transition: color 0.3s;
   font-size: var(--large-font);
+  font-family: var(--font-body);
 }
 
 .navItem a:hover {
   color: var(--first-contrast-color);
+  transition: .5s
+}
+
+.navItem.active a {
+  font-weight: bold;
+  color: var(--first-contrast-color);
+  border-bottom: 1px solid var(--first-contrast-color);
 }
 
 .menuToggle {
@@ -32,6 +40,7 @@
   cursor: pointer;
   display: none; 
 }
+
 
 @media (max-width: 650px) {
   .navbar{

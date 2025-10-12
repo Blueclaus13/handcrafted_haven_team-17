@@ -23,7 +23,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div className={style.details}>
           <h1 className={style.title}>{product.name}</h1>
           <p className={style.description}>{product.description}</p>
-          <p className={style.price}>{product.price}</p>
+          <p className={style.price}>${product.price}</p>
         </div>
       </div>
 
