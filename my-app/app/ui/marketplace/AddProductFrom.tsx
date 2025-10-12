@@ -4,23 +4,14 @@ import Image from "next/image";
 import style from "../componentStyles/editProductForm.module.css";
 import { Product } from "@/app/lib/definitions";
 import Button from "../genComponents/button";
-import { useActionState, useState } from "react";
-import { addProduct } from "@/app/lib/actions";
+import { useState } from "react";
+import { State, updateProduct } from "@/app/lib/actions";
+import { useActionState } from "react";
 
 export default function AddProductFrom({product}: {product: Product}) {
 
-     const initialActionState = {
-          errorMessage: "",
-          success: false,
-      };
-      const [actionState, formAction, isPending] = useActionState(
-      addProduct, 
-      initialActionState
-      );
-      console.log("Price:" + product.price);
-
-      const [formData, setFormData] = useState({
-    name: product?.name || "",
+  const [formData, setFormData] = useState({
+    productName: product?.name || "",
     description: product?.description || "",
     price: product?.price ? Number(product.price) : 0,
     imageFile: null as File | null,
@@ -40,20 +31,28 @@ export default function AddProductFrom({product}: {product: Product}) {
     const file = e.target.files?.[0] || null;
     setFormData((prev) => ({ ...prev, imageFile: file }));
   };
+  const initialState: State = { message: null, errors: {} };
+
+  const [actionState, formAction, isPending] = useActionState(
+    updateProduct,
+    initialState
+  );
+  
+
 
   return(
-    <form  encType="multipart/form-data" className={style.formStyle}>
+    <form  action={formAction} className={style.formStyle}>
                         <div className={style.formgroup}>
                         <label  htmlFor="productName">Product Name:</label>
                         <input 
-                            type="text" 
-                            id="productName" 
-                            name="productName"
-                            placeholder="Product Name" 
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                            />
+                          type="text" 
+                          id="productName" 
+                          name="productName"
+                          placeholder="Product Name" 
+                          value={formData.productName}
+                          onChange={handleChange}
+                          required
+                          />
                         </div>
                         <div className={style.formgroup}>
                         <label htmlFor="description">Product Description: </label>
@@ -87,27 +86,28 @@ export default function AddProductFrom({product}: {product: Product}) {
                                 width={100} 
                                 height={100} /> 
 
-                            <label htmlFor="image_file">Change photo (.png)</label>
+                            <label htmlFor="image_file">Change photo (.jpg)</label>
                             <input
                                 type="file"
                                 id="image_file"
                                 name="image_file"
-                                accept="image/png"
-                                required
+                                accept=".jpg, .jpeg, .png"
                                 onChange={handleFileChange}
                             />
                         </div>
                         <input type="hidden" name="productId" value={product.id} />
+                        <input type="hidden" name="current_url" value={product.image_url} />
                         <div className={style.buttonGroup}>
                             <Button type="button" disabled={isPending} onClick={() => window.history.back()} >
                                 Cancel
                             </Button>
+
                             <Button type="submit" disabled={isPending}>
                             {isPending ? "Editing..." : "Edit Product"}
                             </Button>
                         </div>
-                        {actionState?.errorMessage && (
-                            <p className={style.errorMessage}>{actionState.errorMessage}</p>)}
+            {actionState?.message && (
+              <p className={style.errorMessage}>{actionState.message}</p>)}
                     </form>
   );
 }

@@ -4,34 +4,40 @@ import { z } from 'zod';
 import postgres from 'postgres';
 import path from "path";
 import fs from "fs";
+import { revalidatePath } from 'next/cache';
+
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
 
 const productFormSchema = z.object({
+  productId: z.string(),
   productName: z.string(),
   description: z.string(),
   price: z.coerce
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
+  current_url: z.string().optional(),
   image_file: z.file({
     message: 'Please add a picture'
   }),
   seller_id: z.string()
 });
 
+// For updates we want `image_file` to be optional so the caller can update
+// other fields without uploading a new image.
+const UpdateProduct = productFormSchema.partial({ image_file: true }).omit({ seller_id: true });
+const CreateProduct = productFormSchema.omit({ productId: true, current_url: true });
+
+
 export async function addProduct(
   prevState:  { errorMessage?: string; success?: boolean },
   formData: FormData) {
 
-    const validatedFields = productFormSchema.safeParse({
-      name: formData.get('productName'),
+    const validatedFields = CreateProduct.safeParse({
+      productName: formData.get('productName'),
       description: formData.get('description'),
-      image_url: formData.get('image_url'),
+      image_file: formData.get('image_file'),
       price: formData.get('price'),
       seller_id: formData.get('userId'),
   });
@@ -45,12 +51,13 @@ export async function addProduct(
 
    // Prepare data for insertion into the database
   const { productName, description, image_file, price, seller_id } = productFormSchema.parse({
-      name: formData.get('productName'),
+      productName: formData.get('productName'),
       description: formData.get('description'),
       image_file: formData.get('image_file'),
       price: formData.get('price'),
       seller_id: formData.get('userId'),
   });
+  
   let image_url = null
   if (image_file && image_file.size > 0) {
     const arrayBuffer = await image_file.arrayBuffer();
@@ -74,31 +81,80 @@ export async function addProduct(
   }
 }
   
-export async function loginAction(
-    prevState: { success: boolean; message: string },
-    formData: FormData) {
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
-  const redirectTo = "/profile";
-    //console.log("Login action called with:", { email, password});
 
-  // Here you would typically validate the user's credentials with your database
-    const result = loginSchema.safeParse({ email, password });
-  
-    if (!result.success) {
-    return {
-      success: false,
-      message: result.error.issues[0].message,
+export type State = {
+    errors?: {
+        productId?: string[];
+        price?: string[];
+        productName?: string[];
+        description?: string[];
+        image_file?: string[];
     };
+    message?: string | null;
+};
+
+export async function updateProduct(
+  prevState: State | undefined,
+  formData: FormData
+) {
+  
+    const validatedFields = UpdateProduct.safeParse({
+      productId: formData.get('productId'),
+      productName: formData.get('productName'),
+      description: formData.get('description'),
+      image_file: formData.get('image_file'),
+      price: formData.get('price'),
+      current_url: formData.get('current_url')
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Product.',
+    } as State;
   }
 
-   // Simulation
-  if (email === "test@example.com" && password === "123456") {
-    redirect(redirectTo); // ✅ Login exitoso
+  const { productId, productName, description, image_file, price, current_url} = UpdateProduct.parse({
+   productId: formData.get('productId'),
+   productName: formData.get('productName'),
+   description: formData.get('description'),
+   image_file: formData.get('image_file'),
+   price: formData.get('price'),
+   current_url: formData.get('current_url')
+   });
+  //  console.log("Current URL: ", current_url);
+  //  console.log("Image File Name: ", image_file?.name);
+  //  console.log("Product name: ", productName);
+  //  console.log("Product ID: ", productId);  
+  //  console.log("Description: ", description);
+  // console.log("Price: ", price);
+    
+  // Only upload and set a new image URL when the client provided a file.
+  const newImageUrl = (image_file && (image_file as File).size > 0)
+    ? `/images/products/${(image_file as File).name}`
+    : null;
+
+  if (newImageUrl) {
+    // persist file to disk
+    const arrayBuffer = await (image_file as File).arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const uploadPath = path.join(process.cwd(), "public", "images", "products", (image_file as File).name);
+    fs.writeFileSync(uploadPath, buffer);
   }
 
-  return {
-    success: false,
-    message: "Invalid email or password",
-  };
-}   
+  try {
+    await sql`
+      UPDATE products
+      SET name = ${productName},
+          description = ${description},
+          price = ${price},
+          image_url = COALESCE(${newImageUrl}, image_url)
+      WHERE id = ${productId}::uuid
+    `;
+
+  } catch (error) {
+    return { message: 'Database Error: Failed to Update Product.' } as State;
+  }
+    revalidatePath('/profile');
+    redirect('/profile');
+}

@@ -9,6 +9,7 @@ import {addProduct }from "../../lib/actions";
 import { Product, User } from "@/app/lib/definitions";
 import Modal from "../genComponents/modal";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 const defaultImage = "placeholder-picture-profile.jpg";
 
 export default function SellerProfilePage({
@@ -19,6 +20,9 @@ export default function SellerProfilePage({
   productsList: Product[];
 })
      {
+    const { data: session, status: sessionStatus } = useSession();
+    console.log(`Session data in profile page:  ${session?.user.id}`);
+
     const [products, setProducts] = useState<Product[]>(productsList);
     console.log(products)
 
@@ -33,8 +37,6 @@ export default function SellerProfilePage({
     initialActionState
     );
     const [showAddProductModal, setShowAddProductModal] = useState<boolean>(false);
-    const [showEditProductModal, setShowEditProductModal] = useState<boolean>(false);
-    const [showEditUserModal, setShowEditUserModal] = useState<boolean>(false);
 
     function toggleAddProductModal() {
      setShowAddProductModal(!showAddProductModal);
@@ -86,7 +88,7 @@ export default function SellerProfilePage({
                     onClose={toggleAddProductModal}
                     title="Add New Product">
                     <section className={style.addProductSection}>
-                    <form action={formAction} encType="multipart/form-data" className={style.formStyle}>
+                    <form action={formAction}  className={style.formStyle}>
                         <div className={style.formgroup}>
                         <label  htmlFor="productName">Product Name:</label>
                         <input 
