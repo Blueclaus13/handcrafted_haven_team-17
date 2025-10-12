@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
 import postgres from 'postgres';
 import { v4 as uuidv4 } from 'uuid';
 import { products as placeholderProducts } from '../lib/placeholder_data';
@@ -22,7 +22,7 @@ async function seedProducts() {
       price VARCHAR(50) NOT NULL,
       description TEXT NOT NULL,
       image_url VARCHAR(255) NOT NULL,
-      seller_id INT
+      seller_id UUID NOT NULL
     );
   `;
 

@@ -1,6 +1,7 @@
-import Layout from "./ui/genComponents/layout"; 
+import Layout from "./ui/genComponents/layout";
 import "./globals.css";
 import "./globals.css";
+import Providers from "@/app/providers";
 import { Quicksand, Nunito } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 
@@ -33,8 +34,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body >
-        <Layout>{children}</Layout>
+      <body>
+        {/* Wrap everything in the SessionProvider */}
+        <Providers>
+          <Layout>{children}</Layout>
+        </Providers>
       </body>
     </html>
   );

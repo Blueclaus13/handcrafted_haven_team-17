@@ -1,7 +1,7 @@
 .header {
   display: flex;
   gap: 20px;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   background: linear-gradient(180deg, #8B5E3C 0%, #946642 50%, #9F7048 100%);
@@ -9,12 +9,13 @@
   top: 0;                
   left: 0;               
   width: 100%;
-  z-index: 1000;        
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: auto;
   font-size: var(--large-font);
 }
 
+/* ---------- LOGO ---------- */
 .logo {
   display: flex;
   align-items: center;
@@ -28,29 +29,98 @@
   text-align: center;
 }
 
+/* ---------- SIGN / PROFILE SECTION ---------- */
 .signProfile {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1rem;
   font-size: var(--large-font);
   color: var(--light-color);
   background-color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
+
+/* ---------- PROFILE CONTAINER ---------- */
+.profileContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Circular avatar */
+.profileImage {
+  border-radius: 50%;
+  border: 2px solid var(--light-color);
+  object-fit: cover;
+}
+
+/* Stack Profile + Sign Out vertically */
+.profileActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Profile link */
+.profileLink {
+  text-decoration: none;
+  color: var(--light-color);
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.profileLink:hover {
+  color: var(--accent-color);
+}
+
+/* Sign out button */
+.signOutButton {
+  background-color: var(--light-color);
+  color: var(--primary-color);
+  font-size: var(--small-font);
+  border: none;
+  border-radius: 5px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.signOutButton:hover {
+  background-color: var(--accent-color);
+  color: var(--light-color);
+}
+
+/* ---------- RESPONSIVE ---------- */
 @media only screen and (max-width: 650px) {
-    .header {
-        flex-direction: column;
-        height: auto;
-        text-align: center;
-        gap: 10px;
-        padding: 0;  
-    }
-    .logo {
-        justify-content: center;
-        width: 100%;
-        border-radius: 0;
-    }
-    .signProfile {
-        justify-content: center;
-        width: auto;
-        font-size: var(--small-font);
-    }
+  .header {
+    flex-direction: column;
+    height: auto;
+    text-align: center;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .logo {
+    justify-content: center;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .signProfile {
+    justify-content: center;
+    width: 100%;
+    font-size: var(--small-font);
+    flex-direction: column;
+  }
+
+  .profileContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileActions {
+    flex-direction: column;
+    align-items: center;
+  }
 }

@@ -1,21 +1,34 @@
-// components/Hero.tsx
-// app/components/Hero.tsx
+'use client'; // 👈 required to use hooks like useSession
+
 import Image from "next/image";
 import styles from "../componentStyles/hero.module.css";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Hero() {
+  const { data: session, status: sessionStatus } = useSession();
+
   return (
     <section className={styles.hero}>
       {/* Left: Text */}
       <div className={styles.content}>
-        <h1 className={styles.title}>Welcome to Handcrafted Haven</h1>
+        <h1 className={styles.title}>Welcome to HandCrafted Haven</h1>
         <p className={styles.subtitle}>
-          Join our vast marketplace of artisancrafts and goods.
+          Exlpore unique, handmade treasures crafted with love.
         </p>
-        <Link href="/registration" className={styles.registerLink}>
-          Register →
-        </Link>
+
+        {/* Change the link depending on session */}
+        {sessionStatus === "loading" ? (
+          <p>Loading...</p>
+        ) : session?.user ? (
+          <Link href="/profile" className={styles.registerLink}>
+            Profile →
+          </Link>
+        ) : (
+          <Link href="/registration" className={styles.registerLink}>
+            Register →
+          </Link>
+        )}
       </div>
 
       {/* Right: Hero Image */}

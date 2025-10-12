@@ -1,58 +1,116 @@
+/* ====== Filter bar ====== */
+.filtersBar {
+  margin: 0 0 1rem 0;
+}
+
+.filtersRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.input {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.45rem;
+  min-width: 180px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #6366f1;           /* indigo-500 */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Buttons */
+.applyButton,
+.clearButton {
+  padding: 0.55rem 0.9rem;
+  border-radius: 0.45rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.applyButton {
+  background: #111827;             /* neutral-900 */
+  color: #fff;
+}
+
+.applyButton:hover {
+  background: #0b0f1a;
+}
+
+.clearButton {
+  background: #f3f4f6;             /* gray-100 */
+  color: #111827;
+  border-color: #e5e7eb;
+}
+
+.clearButton:hover {
+  background: #e5e7eb;
+}
+
+/* ====== Your existing layout (from your message) ====== */
 .container {
-    padding: 2rem;
-  }
-  
-  .container h2 {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  
-  .card {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e5e7eb; /* light gray divider */
-  }
-  
-  .card:last-child {
-    border-bottom: none; /* no divider after last item */
-  }
-  
-  .productListImage img {
-    width: 160px;
-    height: auto;
-    object-fit: cover;
-  }
-  
-  .productListName {
-    font-weight: 600;
-    font-size: 1.2rem;
-    margin-bottom: 0.25rem;
-  }
-  
-  .productListDescription {
-    font-size: 0.95rem;
-    color: #555;
-    margin-bottom: 0.5rem;
-  }
-  
-  .productListPrice {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-  }
-  
-  .productListScore {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  /* Right-hand content flexes to fill space */
-  .card > div:not(.productListImage) {
-    flex: 1;
-  }
+  padding: 2rem;
+}
+
+.container h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb; /* light gray divider */
+}
+
+.card:last-child {
+  border-bottom: none; /* no divider after last item */
+}
+
+.productListImage img {
+  width: 160px;
+  height: auto;
+  object-fit: cover;
+}
+
+.productListName {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.productListDescription {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.productListPrice {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.productListScore {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Right-hand content flexes to fill space */
+.card > div:not(.productListImage) {
+  flex: 1;
+}
+
   
