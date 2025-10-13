@@ -1,4 +1,4 @@
-'use client'; // 👈 required to use hooks like useSession
+'use client';
 
 import Image from "next/image";
 import styles from "../componentStyles/hero.module.css";
