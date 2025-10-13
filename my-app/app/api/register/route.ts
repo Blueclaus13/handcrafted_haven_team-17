@@ -1,73 +1,78 @@
-// app/api/register/route.ts
+// app/api/editUser/[id]/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: Request) {
+export async function PUT(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    const body = await req.json();
+    // ✅ Await params as required by Next.js 15+
+    const { id } = await context.params;
 
-    // Destructure with cleaner names from frontend payload
+    // ✅ Handle JSON body safely
+    const body = await request.json();
+
     const {
-      firstName,
-      lastName,
-      userName,
+      firstname,
+      lastname,
+      username,
       email,
       password,
       birthday,
       description,
-      isSeller,
+      image_url,
+      is_seller,
     } = body;
 
-    // ✅ Check for existing user by email or username
-    const userExists = await prisma.users.findFirst({
-      where: {
-        OR: [{ email }, { username: userName }],
-      },
-    });
+    // ✅ Check if user exists
+    const existingUser = await prisma.users.findUnique({ where: { id } });
 
-    if (userExists) {
-      return NextResponse.json(
-        { error: "Email or username already taken" },
-        { status: 400 }
-      );
+    if (!existingUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // ✅ Hash password securely
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // ✅ Hash password only if new one provided
+    const hashedPassword =
+      password && password.trim() !== ""
+        ? await bcrypt.hash(password, 10)
+        : existingUser.password;
 
-    // ✅ Create user
-    const createdUser = await prisma.users.create({
+    // ✅ Limit image_url length to avoid P2000 column overflow
+    let safeImageUrl = image_url;
+    if (safeImageUrl && safeImageUrl.length > 1000000) {
+      // truncate if extremely long base64 (DB safety)
+      safeImageUrl = safeImageUrl.slice(0, 1000000);
+    }
+
+    // ✅ Perform update
+    const updatedUser = await prisma.users.update({
+      where: { id },
       data: {
-        id: crypto.randomUUID(),       // maps to "id" in schema
-        firstname: firstName,          // maps to "firstname" in schema
-        lastname: lastName,            // maps to "lastname" in schema
-        username: userName,            // maps to "username" in schema
-        email,                         // schema: "email"
-        password: hashedPassword,      // schema: "password"
-        birthday: new Date(birthday),  // schema: "birthday"
-        description: description || null, // schema: "description"
-        is_seller: isSeller,           // schema: "is_seller"
-        created_at: new Date(),        // schema: "created_at"
-        updated_at: new Date(),        // schema: "updated_at"
+        firstname,
+        lastname,
+        username: username || existingUser.username,
+        email,
+        password: hashedPassword,
+        birthday: birthday ? new Date(birthday) : existingUser.birthday,
+        description,
+        image_url: safeImageUrl || existingUser.image_url,
+        is_seller: is_seller ?? existingUser.is_seller,
+        updated_at: new Date(),
       },
     });
 
+    // ✅ Return redirect response
     return NextResponse.json({
       success: true,
-      user: {
-        id: createdUser.id,
-        email: createdUser.email,
-      },
-      status: 201,
-      redirect: "/api/auth/signin",
+      message: "User updated successfully",
+      redirect: "/profile",
+      user: updatedUser,
     });
-  } catch (err) {
-    console.error("Error registering user:", err);
+  } catch (error) {
+    console.error("Error updating user:", error);
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: "Something went wrong while updating user." },
       { status: 500 }
     );
   }

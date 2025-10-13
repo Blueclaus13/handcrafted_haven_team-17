@@ -37,37 +37,25 @@ export default function AddUserForm({ user }: { user: User }) {
     setMessage("");
 
     try {
-      let imageUrl = user.image_url;
-
-      // 🖼️ If a new file is uploaded, convert to Base64 (for now; replace with cloud upload if needed)
+      const formDataToSend = new FormData();
+      formDataToSend.append("firstname", formData.firstname);
+      formDataToSend.append("lastname", formData.lastname);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("description", formData.description);
       if (formData.image_file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(formData.image_file);
-        imageUrl = await new Promise<string>((resolve) => {
-          reader.onload = () => resolve(reader.result as string);
-        });
+        formDataToSend.append("image_file", formData.image_file);
       }
-
-      const updatedData = {
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        email: formData.email,
-        description: formData.description,
-        image_url: imageUrl,
-      };
 
       const response = await fetch(`/api/editUser/${user.id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
+        body: formDataToSend,
       });
 
       const result = await response.json();
 
       if (response.ok) {
         setMessage("✅ User updated successfully!");
+        window.location.href = "/profile"; // ✅ Redirect to profile
       } else {
         setMessage(`❌ Failed to update user: ${result.error || "Unknown error"}`);
       }
