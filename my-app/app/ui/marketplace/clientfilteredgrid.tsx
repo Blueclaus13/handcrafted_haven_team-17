@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import Filters, { FiltersState } from "../genComponents/filters";
 import style from "../componentStyles/products.module.css";
+import Link from "next/link";
 
 export type Product = {
   id: string | number;
@@ -59,7 +60,11 @@ export default function ClientFilteredGrid({ products }: { products: Product[] }
 
       {/* Your original card layout (unchanged) */}
       {filtered.map((product) => (
-        <div key={product.id} className={style.card}>
+        <Link 
+          key={product.id} 
+          className={style.card}
+          href={`/marketplace/${product.id}`}
+          >
           <div className={style.productListImage}>
             <Image
               src={product.imageUrl}
@@ -80,14 +85,14 @@ export default function ClientFilteredGrid({ products }: { products: Product[] }
             </div>
 
             <div className={style.productListPrice}>
-              <p>{typeof product.price === "number" ? product.price.toFixed(2) : product.price}</p>
+              <p>${typeof product.price === "number" ? product.price.toFixed(2) : product.price}</p>
             </div>
 
             <div className={style.productListScore}>
               Review Score: {Number(product.avgScore ?? 0).toFixed(1)}
             </div>
           </div>
-        </div>
+        </Link>
       ))}
 
       {filtered.length === 0 && (
