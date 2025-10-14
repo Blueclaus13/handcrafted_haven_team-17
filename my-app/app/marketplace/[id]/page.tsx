@@ -1,9 +1,10 @@
 import { getProductById } from "@/app/lib/data";
 import Image from "next/image";
 import style from "@/app/ui/componentStyles/ProductPage.module.css";
+import AddReviewClient from "@/app/ui/marketplace/AddReviewClient";
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params; // 👈 await params first
+  const { id } = await params;
   const product = await getProductById(id);
 
   if (!product) {
@@ -23,25 +24,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div className={style.details}>
           <h1 className={style.title}>{product.name}</h1>
           <p className={style.description}>{product.description}</p>
-          <p className={style.price}>${product.price}</p>
+          <p className={style.price}>${Number(product.price).toFixed(2)}</p>
         </div>
       </div>
 
-      <section className={style.reviews}>
-        <h2>Reviews</h2>
-        {product.reviews.length > 0 ? (
-          <ul className={style.reviewList}>
-            {product.reviews.map((r) => (
-              <li key={r.id} className={style.reviewItem}>
-                <p className={style.reviewScore}>Score: {r.score}/5</p>
-                <p>{r.summary}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No reviews yet.</p>
-        )}
-      </section>
+      {/* ✅ delegate reviews + modal handling */}
+      <AddReviewClient productId={product.id} initialReviews={product.reviews} />
     </main>
   );
 }

@@ -85,7 +85,7 @@ export default function ClientFilteredGrid({ products }: { products: Product[] }
             </div>
 
             <div className={style.productListPrice}>
-              <p>${typeof product.price === "number" ? product.price.toFixed(2) : product.price}</p>
+              <p>${Number(product.price).toFixed(2)}</p>
             </div>
 
             <div className={style.productListScore}>
