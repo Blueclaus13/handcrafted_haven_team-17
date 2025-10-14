@@ -12,7 +12,7 @@ export default function Hero() {
     <section className={styles.hero}>
       {/* Left: Text */}
       <div className={styles.content}>
-        <h1 className={styles.title}>Welcome to HandCrafted</h1>
+        <h1 className={styles.title}>Welcome to HandCrafted Haven</h1>
         <p className={styles.subtitle}>
           Exlpore unique, handmade treasures crafted with love.
         </p>

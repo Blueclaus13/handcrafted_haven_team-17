@@ -2,29 +2,40 @@
 import Link from 'next/link';
 import style from "../componentStyles/nav.module.css";
 import { useState } from "react";
+import { usePathname } from 'next/navigation';
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const navItems = [
+    { href: "/", label: "Home" },
+    { href: "/marketplace", label: "Marketplace" },
+    { href: "/Sellers", label: "Sellers" },
+  ];
 
   return (
-  <div className={style.navbar}>
-      <button 
-        className={style.menuToggle} 
-        onClick={() => setOpen(!open)} 
+    <nav className={style.navbar}>
+      <button
+        className={style.menuToggle}
+        onClick={() => setOpen(!open)}
         aria-label="Toggle navigation"
       >
-      {open ? "✖" : "☰"}
+        {open ? "✖" : "☰"}
       </button>
-    <ul className={`${style.navList} ${open ? style.open : ""}`}>
-      <li className={style.navItem}>
-        <Link href="/">Home</Link>
-      </li>
-      <li className={style.navItem}>
-        <Link href="/marketplace">Marketplace</Link>
-      </li>
-      <li className={style.navItem}>
-        <Link href="/Sellers">Sellers</Link>
-      </li>
-    </ul>
-  </div>);
+
+      <ul className={`${style.navList} ${open ? style.open : ""}`}>
+        {navItems.map((item) => (
+          <li
+            key={item.href}
+            className={`${style.navItem} ${
+              pathname === item.href ? style.active : ""
+            }`}
+          >
+            <Link href={item.href}>{item.label}</Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
 }

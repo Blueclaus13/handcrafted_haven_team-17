@@ -34,7 +34,7 @@ export default async function RandomProducts() {
                         </div>
                         <div className={style.productPreviewPrice}>
                             <p>
-                                {product.price}
+                                ${product.price}
                             </p>
                         </div>
                     </Link>
