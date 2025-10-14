@@ -1,0 +1,191 @@
+/* Overlay + modal shell */
+.overlay {
+    position: fixed;
+    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  
+  .modal {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 520px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    transition: transform 160ms ease, opacity 160ms ease;
+    opacity: 1;
+  }
+  
+  /* Close button (top-right) */
+  .closeButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #444;
+    padding: 0.25rem;
+    border-radius: 6px;
+  }
+  .closeButton:hover,
+  .closeButton:focus {
+    background: rgba(0,0,0,0.04);
+    outline: none;
+  }
+  
+  /* Form layout */
+  .form {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Labels */
+  .label {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+  
+  /* Inputs and textarea */
+  .input,
+  .textarea,
+  .select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #222;
+    transition: box-shadow 120ms ease, border-color 120ms ease;
+    background: #fff;
+  }
+  
+  .input:focus,
+  .textarea:focus,
+  .select:focus {
+    outline: none;
+    border-color: #c22069;
+    box-shadow: 0 0 0 4px rgba(194, 32, 105, 0.08);
+  }
+  
+  /* Textarea tune */
+  .textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.4;
+    padding-top: 0.7rem;
+  }
+  
+  /* Inline small helper text / message */
+  .message {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+  
+  /* Success and error colors */
+  .message.success {
+    color: #07623b;
+  }
+  
+  .message.error {
+    color: #b92525;
+  }
+  
+  /* Button row */
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+  
+  /* Primary submit button */
+  .submitButton {
+    appearance: none;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    background: #c22069; /* brand color */
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    box-shadow: 0 6px 18px rgba(194, 32, 105, 0.12);
+  }
+  
+  .submitButton:hover {
+    transform: translateY(-2px);
+    background: #aa1b57;
+  }
+  
+  .submitButton:active {
+    transform: translateY(0);
+  }
+  
+  .submitButton:focus {
+    outline: 3px solid rgba(194, 32, 105, 0.12);
+  }
+  
+  /* Disabled state */
+  .submitButton[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .cancelButton {
+    background: transparent;
+    border: 1px solid #e6e6e6;
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  /* Optional: simple spinner animation if you want a circle */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loading::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+
+  /* Responsive tweaks */
+@media (max-width: 420px) {
+    .modal {
+      padding: 1rem;
+      border-radius: 10px;
+    }
+  }
