@@ -11,6 +11,7 @@ export default function AddUserForm({ user }: { user: User }) {
     email: user?.email || "",
     description: user?.description || "",
     image_file: null as File | null,
+    is_seller: user?.is_seller ? "true" : "false",
   });
 
   const [loading, setLoading] = useState(false);
@@ -35,13 +36,16 @@ export default function AddUserForm({ user }: { user: User }) {
     e.preventDefault();
     setLoading(true);
     setMessage("");
+    
 
     try {
       const formDataToSend = new FormData();
+      // formDataToSend.append("user_id", user.id);
       formDataToSend.append("firstname", formData.firstname);
       formDataToSend.append("lastname", formData.lastname);
       formDataToSend.append("email", formData.email);
       formDataToSend.append("description", formData.description);
+      formDataToSend.append("is_seller", formData.is_seller);
       if (formData.image_file) {
         formDataToSend.append("image_file", formData.image_file);
       }

@@ -9,7 +9,6 @@ import { addProduct } from "../../lib/actions";
 import { Product, User } from "@/app/lib/definitions";
 import Modal from "../genComponents/modal";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 const defaultImage = "placeholder-picture-profile.jpg";
 
 export default function SellerProfilePage({
@@ -20,10 +19,8 @@ export default function SellerProfilePage({
   productsList: Product[];
 })
      {
-    const { data: session, status: sessionStatus } = useSession();
-    console.log(`Session data in profile page:  ${session?.user.id}`);
 
-    const [products, setProducts] = useState<Product[]>(productsList);
+    const [products] = useState<Product[]>(productsList);
     const router = useRouter();
 
     const initialActionState = {
@@ -186,7 +183,7 @@ export default function SellerProfilePage({
                                                         product.image_url
                                                             ? product.image_url.startsWith("/users/")
                                                                 ? product.image_url
-                                                                : `/users/${product.image_url}`
+                                                                : `${product.image_url}`
                                                             : "/placeholder-picture-profile.jpg"
                                                     }
                                                     alt={`Picture of ${product.name || "product"}`}

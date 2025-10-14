@@ -17,7 +17,6 @@ const productFormSchema = z.object({
   price: z.coerce
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
-  current_url: z.string().optional(),
   image_file: z.file({
     message: 'Please add a picture'
   }),
@@ -27,7 +26,7 @@ const productFormSchema = z.object({
 // For updates we want `image_file` to be optional so the caller can update
 // other fields without uploading a new image.
 const UpdateProduct = productFormSchema.partial({ image_file: true }).omit({ seller_id: true });
-const CreateProduct = productFormSchema.omit({ productId: true, current_url: true });
+const CreateProduct = productFormSchema.omit({ productId: true});
 
 
 export async function addProduct(
@@ -103,8 +102,7 @@ export async function updateProduct(
       productName: formData.get('productName'),
       description: formData.get('description'),
       image_file: formData.get('image_file'),
-      price: formData.get('price'),
-      current_url: formData.get('current_url')
+      price: formData.get('price')
   });
 
   if (!validatedFields.success) {
@@ -114,13 +112,12 @@ export async function updateProduct(
     } as State;
   }
 
-  const { productId, productName, description, image_file, price, current_url} = UpdateProduct.parse({
+  const { productId, productName, description, image_file, price} = UpdateProduct.parse({
    productId: formData.get('productId'),
    productName: formData.get('productName'),
    description: formData.get('description'),
    image_file: formData.get('image_file'),
-   price: formData.get('price'),
-   current_url: formData.get('current_url')
+   price: formData.get('price')
    });
   //  console.log("Current URL: ", current_url);
   //  console.log("Image File Name: ", image_file?.name);
@@ -153,7 +150,9 @@ export async function updateProduct(
     `;
 
   } catch (error) {
+    console.error(error);
     return { message: 'Database Error: Failed to Update Product.' } as State;
+
   }
     revalidatePath('/profile');
     redirect('/profile');

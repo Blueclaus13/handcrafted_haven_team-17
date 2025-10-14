@@ -1,5 +1,5 @@
 // app/api/editUser/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
@@ -7,9 +7,10 @@ import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
-export async function PUT(req: Request, context: { params: { id: string } }) {
+export async function PUT(req: NextRequest, context: { params: Promise<{ id: string }> } ) {
     try {
-        const { id } = context.params; // ✅ fixed destructuring
+        const {id} = await context.params; // ✅ fixed destructuring
+        
 
         const contentType = req.headers.get("content-type") || "";
         interface UserUpdateData {

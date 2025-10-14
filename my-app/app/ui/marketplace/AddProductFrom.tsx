@@ -96,7 +96,6 @@ export default function AddProductFrom({product}: {product: Product}) {
                             />
                         </div>
                         <input type="hidden" name="productId" value={product.id} />
-                        <input type="hidden" name="current_url" value={product.image_url} />
                         <div className={style.buttonGroup}>
                             <Button type="button" disabled={isPending} onClick={() => window.history.back()} >
                                 Cancel
