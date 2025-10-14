@@ -2,6 +2,7 @@
 import { useState } from "react";
 import styles from "../ui/componentStyles/RegistrationPage.module.css";
 import Button from "../ui/genComponents/button";
+import { redirect } from 'next/navigation';
 
 export default function RegisterForm() {
   const [error, setError] = useState("");
@@ -32,7 +33,8 @@ export default function RegisterForm() {
       const data = await res.json();
       setError(data.error);
     } else {
-      // maybe redirect to login
+      
+      redirect('/login');
     }
   }
 
