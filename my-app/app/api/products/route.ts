@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
-import { PrismaClient } from "@prisma/client";
+import Prisma from "@/prisma/lib/prisma";
 import fs from "fs";
 import path from "path";
+import { string } from "zod";
 
 
-const prisma = new PrismaClient();
+const prisma = Prisma;
 
 export async function POST(req: NextRequest) {
   try {
