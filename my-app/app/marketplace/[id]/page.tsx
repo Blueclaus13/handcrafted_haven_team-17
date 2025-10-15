@@ -29,7 +29,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       </div>
 
       {/* ✅ delegate reviews + modal handling */}
-      <AddReviewClient productId={product.id} initialReviews={product.reviews} />
+      <AddReviewClient
+        productId={product.id}
+        initialReviews={product.reviews.map(r => ({
+          ...r,
+          product_id: product.id, // add the missing property
+        }))}
+      />
     </main>
   );
 }
