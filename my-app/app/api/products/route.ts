@@ -4,7 +4,6 @@ import { authOptions } from "@/app/lib/auth";
 import Prisma from "@/prisma/lib/prisma";
 import fs from "fs";
 import path from "path";
-import { string } from "zod";
 
 
 const prisma = Prisma;
