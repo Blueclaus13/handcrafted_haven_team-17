@@ -7,7 +7,6 @@ import Button from "../genComponents/button";
 import style from "../componentStyles/profile.module.css";
 import { Product, User } from "@/app/lib/definitions";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 const defaultImage = "/users/placeholder-picture-profile.jpg";
 
 export default function SellerProfilePage({
@@ -18,9 +17,6 @@ export default function SellerProfilePage({
   productsList: Product[];
 })
      {
-    const { data: session, status: sessionStatus } = useSession();
-    console.log(`Session data in profile page:  ${session?.user.id}`);
-
     const [products] = useState<Product[]>(productsList);
     const router = useRouter();
 
@@ -137,7 +133,7 @@ export default function SellerProfilePage({
                         </table>
                     </section>
                                         ) : (
-                                            <p>You don't have Products Added</p>
+                                            <p>You do NOT have Products Added</p>
                                         )}
                 </div>)}
         </div>
