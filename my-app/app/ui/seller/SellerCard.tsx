@@ -13,13 +13,14 @@ type Seller = {
   image_url?: string | null; 
 };
 
+
+
 export default function SellerCard({ seller }: { seller: Seller }) {
-  const defaultImage = "placeholder-picture-profile.jpg";
 
   return (
     <div className={styles.card}>
         <Image
-          src={`/users/${seller.image_url|| defaultImage}`}
+          src={`${seller.image_url? seller.image_url : "/users/placeholder-picture-profile.jpg"}`}
           alt={`${seller.firstname} ${seller.lastname}`}
           width={100}
           height={100}

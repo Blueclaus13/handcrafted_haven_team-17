@@ -3,15 +3,27 @@
 import { useState } from "react";
 import style from "@/app/ui/componentStyles/ReviewModal.module.css";
 
+// Match  Prisma 'reviews' model
+interface Review {
+  id: string;
+  product_id: string;
+  score: number;
+  summary: string;
+  created_at: string;
+  user_id?: string;
+}
+
+interface ReviewModalProps {
+  productId: string;
+  onClose: () => void;
+  onReviewAdded: (review: Review) => void;
+}
+
 export default function ReviewModal({
   productId,
   onClose,
   onReviewAdded,
-}: {
-  productId: string;
-  onClose: () => void;
-  onReviewAdded: (review: any) => void;
-}) {
+}: ReviewModalProps) {
   const [score, setScore] = useState<number | null>(null);
   const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,35 +37,39 @@ export default function ReviewModal({
     setSuccess(false);
 
     try {
-        const res = await fetch("/api/reviews", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            product_id: productId,
-            score,
-            summary,
-          }),
-        });
-      
-        if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.error || "Failed to submit review");
-        }
-      
-        // get the new review with ID
-        const data = await res.json(); // { review: {...} }
-        const newReview = data.review; // extract the actual review
-        onReviewAdded(newReview);
-        setSuccess(true);
-        setScore(null);
-        setSummary("");
-        setTimeout(() => onClose(), 1000); // auto-close modal after success
-      } catch (err: any) {
-        console.error("Error submitting review:", err);
-        setError(err.message || "An unexpected error occurred");
-      } finally {
-        setLoading(false);
+      const res = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          product_id: productId,
+          score: score ?? 0,
+          summary,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to submit review");
       }
+
+      const data: { review: Review } = await res.json();
+      const newReview = data.review;
+
+      onReviewAdded(newReview);
+      setSuccess(true);
+      setScore(null);
+      setSummary("");
+      setTimeout(() => onClose(), 1000); // auto-close modal after success
+    } catch (err: unknown) {
+      console.error("Error submitting review:", err);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,30 +77,34 @@ export default function ReviewModal({
       <div className={style.modal}>
         <h2>Add a Review</h2>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="score">Score (1–5)</label>
-          <input
-            id="score"
-            className={style.input}
-            type="number"
-            min={1}
-            max={5}
-            step="0.1"
-            value={score === null ? "" : score}
-            onChange={(e) => {
-              const val = e.target.value;
-              setScore(val === "" ? null : Number(val));
-            }}
-            required
-          />
+          <div className={style.formGroup}>
+            <label htmlFor="score">Score (1–5)</label>
+            <input
+              id="score"
+              type="number"
+              min={1}
+              max={5}
+              step={0.1}
+              className={style.input}
+              value={score === null ? "" : score}
+              onChange={(e) => {
+                const val = e.target.value;
+                setScore(val === "" ? null : Number(val));
+              }}
+              required
+            />
+          </div>
 
-          <label htmlFor="summary">Summary</label>
-          <textarea
-            id="summary"
-            className={style.textarea}
-            value={summary}
-            onChange={(e) => setSummary(e.target.value)}
-            required
-          />
+          <div className={style.formGroup}>
+            <label htmlFor="summary">Summary</label>
+            <textarea
+              id="summary"
+              className={style.textarea}
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              required
+            />
+          </div>
 
           {error && <p className={style.error}>{error}</p>}
           {success && <p className={style.success}>Review submitted!</p>}
@@ -95,16 +115,9 @@ export default function ReviewModal({
               className={style.submitButton}
               disabled={loading}
             >
-              {loading ? (
-                <span className={style.loading}>
-                  {/* Optional spinner emoji or SVG */}
-                  ⏳ Submitting...
-                </span>
-              ) : (
-                "Submit Review"
-              )}
+              {loading ? "⏳ Submitting..." : "Submit Review"}
             </button>
-          
+
             <button
               type="button"
               className={style.cancelButton}
@@ -112,7 +125,7 @@ export default function ReviewModal({
             >
               Cancel
             </button>
-        </div>
+          </div>
         </form>
       </div>
     </div>

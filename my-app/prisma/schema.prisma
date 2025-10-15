@@ -13,7 +13,7 @@ model products {
   price       String    @db.VarChar(50)
   description String
   image_url   String    @db.VarChar(255)
-  seller_id   Int
+  seller_id   String?   @db.Uuid
   reviews     reviews[]
 }
 

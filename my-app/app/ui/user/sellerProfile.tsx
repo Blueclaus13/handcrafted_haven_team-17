@@ -1,13 +1,12 @@
 "use client";
-import { useState, useActionState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Image from "next/image";
 import Button from "../genComponents/button";
 import style from "../componentStyles/profile.module.css";
-import { addProduct } from "../../lib/actions";
 import { Product, User } from "@/app/lib/definitions";
-import Modal from "../genComponents/modal";
+// import Modal from "../genComponents/modal";
 import Link from "next/link";
 const defaultImage = "placeholder-picture-profile.jpg";
 
@@ -22,20 +21,6 @@ export default function SellerProfilePage({
 
     const [products] = useState<Product[]>(productsList);
     const router = useRouter();
-
-    const initialActionState = {
-        errorMessage: "",
-        success: false,
-    };
-    const [actionState, formAction, isPending] = useActionState(
-        addProduct,
-        initialActionState
-    );
-    const [showAddProductModal, setShowAddProductModal] = useState<boolean>(false);
-
-    function toggleAddProductModal() {
-        setShowAddProductModal(!showAddProductModal);
-    }
 
     function handleEditProfile() {
         router.push(`profile/editUser/${userData.id}`);
@@ -100,66 +85,13 @@ export default function SellerProfilePage({
             {/* ONLY SELLER visible */}
            {userData.is_seller && 
            (<div className={style.sellerSections}>
-                <Button 
-                className={style.btnAddNewProduct}
-                type="button"
-                onClick={toggleAddProductModal}
-                    >Add new Product</Button>
-                <Modal  
-                    open={showAddProductModal} 
-                    onClose={toggleAddProductModal}
-                    title="Add New Product">
-                    <section className={style.addProductSection}>
-                    <form action={formAction}  className={style.formStyle}>
-                        <div className={style.formgroup}>
-                        <label  htmlFor="productName">Product Name:</label>
-                        <input 
-                            type="text" 
-                            id="productName" 
-                            name="productName"
-                            placeholder="Product Name" 
-                            required/>
-                        </div>
-                        <div className={style.formgroup}>
-                        <label htmlFor="description">Product Description: </label>
-                        <textarea 
-                            placeholder="Product Description"
-                            id="description"
-                            name="description"
-                            required  />
-                        </div>
-                        <div className={style.formgroup}>
-                            <label htmlFor="price">Price</label>
-                            <input
-                                type="number"
-                                id="price"
-                                name="price"
-                                placeholder="0.00"
-                                min={0}
-                                step={0.01}
-                                required
-                            />
-                        </div>
-                        <div className={style.formgroup}>
-                            <label htmlFor="image_file">Upload your photo (.png)</label>
-                            <input
-                                type="file"
-                                id="image_file"
-                                name="image_file"
-                                accept="image/png"
-                                required
-                                //onChange={handleFileChange}
-                            />
-                        </div>
-                        <input type="hidden" name="userId" value={userData.id} />
-                        <Button type="submit" disabled={isPending}>
-                            {isPending ? "Adding..." : "Add Product"}
-                        </Button>
-                        {actionState?.errorMessage && (
-                            <p className={style.errorMessage}>{actionState.errorMessage}</p>)}
-                    </form>
-            </section>
-                </Modal>
+                <Button
+                    className={style.btnAddNewProduct}
+                    type="button"
+                    onClick={() => router.push("/profile/addProduct")}
+                    >
+                    Add new Product
+                </Button>
 
                     {/* ===== PRODUCT LIST TABLE ===== */}
                     <section className="tablecontainer">

@@ -2,6 +2,8 @@
   background-color: var(--primary-color); 
   padding: 1rem 2rem;
   flex-grow: 2;
+  border-radius: 8px;
+  height: auto;
 }
 
 .navList {

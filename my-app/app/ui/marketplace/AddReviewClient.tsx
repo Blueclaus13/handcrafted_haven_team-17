@@ -6,14 +6,23 @@ import ReviewModal from "./ReviewModal";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+interface Review {
+  id: string;
+  product_id: string;
+  score: number;
+  summary: string;
+  created_at?: string;
+  user_id?: string;
+}
+
 export default function AddReviewClient({
   productId,
   initialReviews,
 }: {
   productId: string;
-  initialReviews: any[];
+  initialReviews: Review[];
 }) {
-  const [reviews, setReviews] = useState(initialReviews);
+  const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
@@ -26,11 +35,7 @@ export default function AddReviewClient({
     setIsModalOpen(true);
   };
 
-  const handleReviewAdded = (newReview: any) => {
-    // Ensure every review has a unique id
-    if (!newReview.id) {
-      newReview.id = crypto.randomUUID(); // fallback for client-only temporary ID
-    }
+  const handleReviewAdded = (newReview: Review) => {
     setReviews((prev) => [...prev, newReview]);
   };
 
