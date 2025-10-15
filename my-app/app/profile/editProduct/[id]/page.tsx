@@ -2,7 +2,7 @@
 import { getOnlyProductById} from "@/app/lib/data";
 import style from "../../../ui/componentStyles/editProductForm.module.css";
 import { Product } from "@/app/lib/definitions";
-import AddProductFrom from "@/app/ui/marketplace/AddProductFrom";
+import EditProductForm from "@/app/ui/marketplace/EditProductForm";
 
 
 export default async function Page({ params }: { params: { id: string } }){
@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { id: string } }){
    <div className={style.container}>
     <h2>Edit Product</h2>
     <hr/>
-    <AddProductFrom product={product[0]}/>
+    <EditProductForm product={product[0]}/>
    </div>
   );
 }

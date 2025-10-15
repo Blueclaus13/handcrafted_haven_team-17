@@ -6,9 +6,9 @@ import Image from "next/image";
 import Button from "../genComponents/button";
 import style from "../componentStyles/profile.module.css";
 import { Product, User } from "@/app/lib/definitions";
-// import Modal from "../genComponents/modal";
 import Link from "next/link";
-const defaultImage = "placeholder-picture-profile.jpg";
+import { useSession } from "next-auth/react";
+const defaultImage = "/users/placeholder-picture-profile.jpg";
 
 export default function SellerProfilePage({
     userData,
@@ -18,12 +18,18 @@ export default function SellerProfilePage({
   productsList: Product[];
 })
      {
+    const { data: session, status: sessionStatus } = useSession();
+    console.log(`Session data in profile page:  ${session?.user.id}`);
 
     const [products] = useState<Product[]>(productsList);
     const router = useRouter();
 
+
     function handleEditProfile() {
         router.push(`profile/editUser/${userData.id}`);
+    }
+    function handleAddProduct() {
+        router.push(`profile/addProduct/${userData.id}`);
     }
 
     if (!userData) return <p>Loading...</p>;
@@ -55,21 +61,11 @@ export default function SellerProfilePage({
 
                     {/* ✅ FIXED PROFILE IMAGE */}
                     <Image
-                        src={
-                            userData.image_url
-                                ? userData.image_url.startsWith("/users/")
-                                    ? userData.image_url
-                                    : `/users/${userData.image_url}`
-                                : `/${defaultImage}`
-                        }
-                        alt={`${userData.firstname || "User"} ${userData.lastname || ""
-                            } Picture`}
+                        src={userData.image_url || `/${defaultImage}`}
+                        alt="Profile Picture"
                         width={80}
                         height={80}
                         className={style.profilePicture}
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).src = `/${defaultImage}`;
-                        }}
                     />
 
                     <Button
@@ -86,12 +82,12 @@ export default function SellerProfilePage({
            {userData.is_seller && 
            (<div className={style.sellerSections}>
                 <Button
-                    className={style.btnAddNewProduct}
-                    type="button"
-                    onClick={() => router.push("/profile/addProduct")}
+                        type="button"
+                        className={style.btnAddNewProduct}
+                        onClick={handleAddProduct}
                     >
-                    Add new Product
-                </Button>
+                        Add new Product
+                    </Button>
 
                     {/* ===== PRODUCT LIST TABLE ===== */}
                     <section className="tablecontainer">
@@ -111,21 +107,11 @@ export default function SellerProfilePage({
                                         <td>
                                             <div className={style.productListImage}>
                                                 <Image
-                                                    src={
-                                                        product.image_url
-                                                            ? product.image_url.startsWith("/users/")
-                                                                ? product.image_url
-                                                                : `${product.image_url}`
-                                                            : "/placeholder-picture-profile.jpg"
-                                                    }
+                                                    src={product.image_url || "/placeholder.png"}
                                                     alt={`Picture of ${product.name || "product"}`}
                                                     width={60}
                                                     height={60}
                                                     style={{ height: "auto" }}
-                                                    onError={(e) => {
-                                                        (e.target as HTMLImageElement).src =
-                                                            "/placeholder-picture-profile.jpg";
-                                                    }}
                                                 />
                                             </div>
                                         </td>

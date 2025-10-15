@@ -1,20 +1,20 @@
 "use client";
 
-import Image from "next/image";
 import style from "../componentStyles/editProductForm.module.css";
-import { Product } from "@/app/lib/definitions";
 import Button from "../genComponents/button";
 import { useState } from "react";
-import { State, updateProduct } from "@/app/lib/actions";
+import { addProduct, State } from "@/app/lib/actions";
 import { useActionState } from "react";
 
-export default function AddProductFrom({product}: {product: Product}) {
+export default function AddProductFrom({userId}: {userId: string}) {
+  //console.log(`User ID in AddProductForm: ${userId}`);
 
   const [formData, setFormData] = useState({
-    productName: product?.name || "",
-    description: product?.description || "",
-    price: product?.price ? Number(product.price) : 0,
+    productName: "",
+    description: "",
+    price:  0,
     imageFile: null as File | null,
+    seller_id: userId
   });
 
   const handleChange = (
@@ -34,11 +34,10 @@ export default function AddProductFrom({product}: {product: Product}) {
   const initialState: State = { message: null, errors: {} };
 
   const [actionState, formAction, isPending] = useActionState(
-    updateProduct,
+    addProduct,
     initialState
   );
   
-
 
   return(
     <form  action={formAction} className={style.formStyle}>
@@ -80,11 +79,6 @@ export default function AddProductFrom({product}: {product: Product}) {
                             />
                         </div>
                         <div className={style.formgroup}>
-                            <Image 
-                                src={product?.image_url || "/placeholder.png"} 
-                                alt={product?.name || "Product Image"} 
-                                width={100} 
-                                height={100} /> 
 
                             <label htmlFor="image_file">Change photo (.jpg)</label>
                             <input
@@ -95,14 +89,14 @@ export default function AddProductFrom({product}: {product: Product}) {
                                 onChange={handleFileChange}
                             />
                         </div>
-                        <input type="hidden" name="productId" value={product.id} />
+                        <input type="hidden" name="seller_id" value={userId} />
                         <div className={style.buttonGroup}>
-                            <Button type="button" disabled={isPending} onClick={() => window.history.back()} >
-                                Cancel
-                            </Button>
+                          <Button type="button" disabled={isPending} onClick={() => window.history.back()} >
+                                  Cancel
+                             </Button>
 
                             <Button type="submit" disabled={isPending}>
-                            {isPending ? "Editing..." : "Edit Product"}
+                            {isPending ? "Adding..." : "Add Product"}
                             </Button>
                         </div>
             {actionState?.message && (

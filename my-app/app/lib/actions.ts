@@ -9,6 +9,16 @@ import { revalidatePath } from 'next/cache';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
+export type State = {
+    errors?: {
+        productId?: string[];
+        price?: string[];
+        productName?: string[];
+        description?: string[];
+        image_file?: string[];
+    };
+    message?: string | null;
+};
 
 const productFormSchema = z.object({
   productId: z.string(),
@@ -20,7 +30,7 @@ const productFormSchema = z.object({
   image_file: z.file({
     message: 'Please add a picture'
   }),
-  seller_id: z.string()
+  seller_id: z.string().uuid("Invalid seller ID"),
 });
 
 // For updates we want `image_file` to be optional so the caller can update
@@ -30,18 +40,22 @@ const CreateProduct = productFormSchema.omit({ productId: true});
 
 
 export async function addProduct(
-  prevState:  { errorMessage?: string; success?: boolean },
+  prevState: State | undefined,
   formData: FormData) {
+
+    console.log("Form Data received in action:", formData.get('seller_id'));
 
     const validatedFields = CreateProduct.safeParse({
       productName: formData.get('productName'),
       description: formData.get('description'),
       image_file: formData.get('image_file'),
       price: formData.get('price'),
-      seller_id: formData.get('userId'),
+      seller_id: formData.get('seller_id'),
   });
+  console.log("Validation errors:", validatedFields);
 
   if (!validatedFields.success) {
+    console.log("Validation errors:", validatedFields);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing Fields. Failed to Create Invoice.',
@@ -49,12 +63,12 @@ export async function addProduct(
   }
 
    // Prepare data for insertion into the database
-  const { productName, description, image_file, price, seller_id } = productFormSchema.parse({
+  const { productName, description, image_file, price, seller_id } = CreateProduct.parse({
       productName: formData.get('productName'),
       description: formData.get('description'),
       image_file: formData.get('image_file'),
       price: formData.get('price'),
-      seller_id: formData.get('userId'),
+      seller_id: formData.get('seller_id'),
   });
   
   let image_url = null
@@ -71,27 +85,24 @@ export async function addProduct(
       INSERT INTO products (name, price, description, image_url, seller_id)
       VALUES (${productName}, ${price}, ${description}, ${image_url}, ${seller_id})
     `;
-    console.log("success inserting Product")
-    return { message: "Product added successfully!" };
+    
   }catch (error) {
     // We'll log the error to the console for now
     console.error(error);
-     return { errorMessage: 'Database Error: Failed to add product.', success: false  };
+     // Return a value that matches the exported `State` type so callers of
+     // `useActionState` get a consistent action/state shape.
+     return { message: 'Database Error: Failed to add product.' } as State;
   }
+    revalidatePath('/profile');
+    redirect('/profile');
 }
   
 
-export type State = {
-    errors?: {
-        productId?: string[];
-        price?: string[];
-        productName?: string[];
-        description?: string[];
-        image_file?: string[];
-    };
-    message?: string | null;
-};
 
+
+
+
+// action to update product
 export async function updateProduct(
   prevState: State | undefined,
   formData: FormData
