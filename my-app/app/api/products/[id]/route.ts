@@ -5,14 +5,14 @@ import  prisma  from "@/prisma/lib/prisma"; // adjust path if needed
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = params;
     const formData = await req.formData();
 
     const name = formData.get("name") as string;
