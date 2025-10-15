@@ -16,6 +16,11 @@ export default async function Page() {
   console.log("USER DATA:", userData);
   console.log("PRODUCTS LIST:", productsList);
 
+
+if (!session?.user.id) {
+  return <p>Please sign in to view your profile.</p>;
+}
+
   
   return (
     <div>

@@ -152,6 +152,11 @@ export async function fetchUserProducts(userId: string) {
       FROM users u
       LEFT JOIN products p ON u.id = p.seller_id
       WHERE u.id = ${userId}::uuid;`;
+
+      if (products.length === 1 && products[0].id === null) {
+        return [];
+      }
+      
  return products;
     }catch (err) {
     console.error('Database Error:', err);
@@ -167,16 +172,15 @@ export async function getOnlyProductById(productId: string) {
         FROM products
         WHERE id = ${productId}::uuid;`;
       
-      //console.log(product[0]);
-  
-      return product.map((p) => ({
-        id: p.id,
-        name: p.name,
-        description: p.description ?? "No description available",
-        price: p.price ?? "N/A",
-        image_url: p.image_url,
-        seller_id: p.seller_id
-      }));
+      
+    return product.map((p) => ({
+      id: p.id,
+      name: p.name,
+      description: p.description ?? "No description available",
+      price: p.price ?? "N/A",
+      image_url: p.image_url,
+      seller_id: p.seller_id,
+    }));
       
     } catch (err) {
       console.error("Error geting Product by Id:", err);

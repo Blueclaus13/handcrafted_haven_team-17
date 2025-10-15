@@ -50,6 +50,10 @@ export default function SellerProfilePage({
                             {userData.email}
                         </p>
                         <p>
+                            <span className={style.label}>Description: </span>
+                            {userData.description}
+                        </p>
+                        <p>
                             <span className={style.label}>Birthday: </span>
                             {userData.birthday.toLocaleDateString()}
                         </p>
@@ -61,7 +65,7 @@ export default function SellerProfilePage({
 
                     {/* ✅ FIXED PROFILE IMAGE */}
                     <Image
-                        src={userData.image_url || `/${defaultImage}`}
+                        src={userData.image_url || `${defaultImage}`}
                         alt="Profile Picture"
                         width={80}
                         height={80}
@@ -90,7 +94,8 @@ export default function SellerProfilePage({
                     </Button>
 
                     {/* ===== PRODUCT LIST TABLE ===== */}
-                    <section className="tablecontainer">
+                                     {products && products.length > 0 ? (
+                     <section className="tablecontainer">
                         <table className={style.productTable}>
                             <thead>
                                 <tr>
@@ -107,7 +112,7 @@ export default function SellerProfilePage({
                                         <td>
                                             <div className={style.productListImage}>
                                                 <Image
-                                                    src={product.image_url || "/placeholder.png"}
+                                                    src={product.image_url || "/images/products/default-product-image.png"}
                                                     alt={`Picture of ${product.name || "product"}`}
                                                     width={60}
                                                     height={60}
@@ -131,8 +136,10 @@ export default function SellerProfilePage({
                             </tbody>
                         </table>
                     </section>
-                </div>
-            )}
+                                        ) : (
+                                            <p>You don't have Products Added</p>
+                                        )}
+                </div>)}
         </div>
     );
 }
