@@ -9,17 +9,15 @@ import { authOptions } from "../lib/auth";
 export default async function Page() {
 
   const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+  return <p>Please sign in to view your profile.</p>;
+}
 
   const userData: User = await fetchUser(session?.user.id as string || "");
   const productsList: Product[] = await fetchUserProducts(session?.user.id as string || "");
 
   console.log("USER DATA:", userData);
   console.log("PRODUCTS LIST:", productsList);
-
-
-if (!session?.user.id) {
-  return <p>Please sign in to view your profile.</p>;
-}
 
   
   return (
